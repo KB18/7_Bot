@@ -4,4 +4,3 @@ Pymoe
 requests
 simplejson
 youtube_dl
-chalk
