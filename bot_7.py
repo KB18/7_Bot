@@ -40,8 +40,8 @@ if __name__ == "__main__":
 		try:
 			bot.load_extension(extension)
 		except Exception as e:
-			exc =
-			print('Failed to load extension')
+			exc = '{}: {}'.format(type(e).__name__, e)
+			print('Failed to load extension {} \n {}'.format(extension, exc))
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
