@@ -35,6 +35,10 @@ async def bon(ctx):
 async def salut(ctx, user: discord.Member):
 	await bot.say("Bonjour {} :wave:".format(user.name))
 	
+@bot.command(pass_context = True)
+async def origine(ctx):
+	await bot.say("Mon code a été réaliser par @KARIM#9286")
+	
 #if __name__ == "__main__":
 	#for extension in startup_extensions:
 		#try:
