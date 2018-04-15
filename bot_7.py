@@ -11,7 +11,7 @@ import chalk
 api = str(os.environ.get('RIOT_KEY'))
 
 #startup_extensions = ["Music"]
-
+bot2 = commands.Bot(command_prefix='.')
 bot = commands.Bot(command_prefix='7_')
 
 @bot.event
@@ -40,6 +40,9 @@ async def salut(ctx, user: discord.Member):
 async def origine(ctx):
 	await bot.say("Mon code a été réaliser par @KARIM#9286")
 	
+@bot2.command(pass_context = True)
+async def music(ctx):
+	await bot.say("You have to be in the Music vocal chanel to listen music.")
 #if __name__ == "__main__":
 	#for extension in startup_extensions:
 		#try:
