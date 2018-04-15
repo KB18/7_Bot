@@ -9,6 +9,8 @@ import os
 
 api = str(os.environ.get('RIOT_KEY'))
 
+startup_extensions = ["Music"]
+
 bot = commands.Bot(command_prefix='7_')
 
 @bot.event
@@ -16,6 +18,10 @@ async def on_ready():
 	print("je suis pret")
 	print("Je m'appele " + bot.user.name)
 	print("mon id est " + bot.user.id)
+	
+class Main_Commands():
+	def __init__(self, bot):
+		self.bot = bot
 
 @bot.command(pass_context = True)
 async def ping(ctx):
@@ -28,6 +34,14 @@ async def bon(ctx):
 @bot.command(pass_context = True)
 async def salut(ctx):
 	await bot.say("Bonjour {} :wave:".format(user.name))
+	
+if __name__ == "__main__":
+	for extension in startup_extensions:
+		try:
+			bot.load_extension(extension)
+		except Exception as e:
+			exc =
+			print('Failed to load extension')
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
