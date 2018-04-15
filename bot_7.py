@@ -32,7 +32,7 @@ async def bon(ctx):
 	await bot.say("jour")
 	
 @bot.command(pass_context = True)
-async def salut(ctx):
+async def salut(ctx, user: discord.Member):
 	await bot.say("Bonjour {} :wave:".format(user.name))
 	
 if __name__ == "__main__":
