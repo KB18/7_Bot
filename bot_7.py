@@ -24,6 +24,10 @@ async def ping(ctx):
 @bot.command(pass_context = True)
 async def bon(ctx):
 	await bot.say("jour")
+	
+@bot.command(pass_context = True)
+async def salut(ctx):
+	await bot.say("Bonjour {} :wave:".format(user.name))
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
