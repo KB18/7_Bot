@@ -20,6 +20,12 @@ async def on_ready():
 	print("Je m'appele " + bot.user.name)
 	print("mon id est " + bot.user.id)
 	
+@bot2.event
+async def on_ready():
+	print("je suis pret")
+	print("Je m'appele " + bot.user.name + "_2")
+	print("mon id est " + bot.user.id + "_2")
+	
 #class Main_Commands():
 	#def __init__(self, bot):
 		#self.bot = bot
