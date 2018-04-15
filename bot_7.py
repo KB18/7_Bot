@@ -2,7 +2,8 @@
 
 import discord
 from discord.ext import commands
-from discord.ext.commands import Bot 
+from discord.ext.commands import Bot
+from discord.voice_client import VoiceClient
 import asyncio
 import os
 
@@ -19,6 +20,10 @@ async def on_ready():
 @bot.command(pass_context = True)
 async def ping(ctx):
 	await bot.say(":ping_pong: pong!!")
+
+@bot.command(pass_context = True)
+async def bon(ctx):
+	await bot.say("jour")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
