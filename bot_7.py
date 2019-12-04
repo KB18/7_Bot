@@ -41,14 +41,8 @@ async def origine(ctx):
 	
 @bot.command(pass_context = True)
 async def music(ctx):
-	await bot.say("You have to be in the Music vocal chanel to listen music.")
-#if __name__ == "__main__":
-	#for extension in startup_extensions:
-		#try:
-			#bot.load_extension(extension)
-		#except Exception as e:
-			#exc = '{}: {}'.format(type(e).__name__, e)
-			#print('Failed to load extension {} \n {}'.format(extension, exc))
+	await bot.say("pas encore coder.")
+	await bot.("mais bientot dispo")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
