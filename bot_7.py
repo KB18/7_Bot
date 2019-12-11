@@ -11,7 +11,7 @@ import chalk
 api = str(os.environ.get('RIOT_KEY'))
 
 #startup_extensions = ["Music"]
-bot = commands.Bot(command_prefix='7_' or '.' )
+bot = commands.Bot(command_prefix='7' or '*' )
 
 @bot.event
 async def on_ready():
