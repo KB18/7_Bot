@@ -42,7 +42,7 @@ async def origine(ctx):
 @bot.command(pass_context = True)
 async def music(ctx):
 	await bot.say("pas encore coder.")
-	await bot.("mais bientot disponible")
+	await bot.say("mais bientot disponible")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
