@@ -40,7 +40,7 @@ async def origine(ctx):
 	await bot.say("Mon code a été réaliser par @KARIM#9286")
 	
 @bot.command(pass_context = True)
-async def oklm(ctx):
+async def music(ctx):
 	await bot.say("pas encore coder.")
 	#await bot.say("mais bientot disponible")
 
