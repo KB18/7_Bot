@@ -11,7 +11,7 @@ import chalk
 api = str(os.environ.get('RIOT_KEY'))
 
 #startup_extensions = ["Music"]
-bot = commands.Bot(command_prefix='*' )
+bot = commands.Bot(command_prefix='*')
 
 @bot.event
 async def on_ready():
@@ -42,7 +42,6 @@ async def origine(ctx):
 @bot.command(pass_context = True)
 async def music(ctx):
 	await bot.say("pas encore coder.")
-	#await bot.say("mais bientot disponible")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
