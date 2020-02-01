@@ -11,7 +11,7 @@ import chalk
 api = str(os.environ.get('RIOT_KEY'))
 
 #startup_extensions = ["Music"]
-bot = commands.Bot(command_prefix='7' or '*' )
+bot = commands.Bot(command_prefix='*' )
 
 @bot.event
 async def on_ready():
@@ -37,7 +37,7 @@ async def salut(ctx, user: discord.Member):
 	
 @bot.command(pass_context = True)
 async def origine(ctx):
-	await bot.say("Mon code a été réaliser par @KARIM#9286")
+	await bot.say("Mon code a été réaliser par KARIM")
 	
 @bot.command(pass_context = True)
 async def music(ctx):
