@@ -20,11 +20,11 @@ async def on_ready():
 	
 @bot.command()
 async def ping(ctx):
-	await bot.say(":ping_pong: pong!!")
+	await ctx.say(":ping_pong: pong!!")
 
 @bot.command()
 async def bon(ctx):
-	await bot.say("jour")
+	await ctx.say("jour")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
