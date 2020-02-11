@@ -2,27 +2,28 @@
 
 import discord
 from discord.ext import commands
+from discord.ext.commands import Bot 
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import asyncio
 import os
 
-api = str(os.environ.get('RIOT_KEY'))
+@bot.command()
+async def ping(ctx):
+	await bot.say(":ping_pong: pong!!")
 
-#startup_extensions = ["Music"]
-bot = commands.Bot(command_prefix='*')
+@bot.command()
+async def bon(ctx):
+	await bot.say("jour")
 
-@bot.event
-async def on_ready():
-	print("je suis pret")
-	print("Je m'appele " + bot.user.name)
-	print("mon id est " + bot.user.id)
-	
+
+bot.run(str(os.environ.get('BOT_TOKEN')))
+
 #class Main_Commands():
 	#def __init__(self, bot):
 		#self.bot = bot
 
-@bot.command()
+"""@bot.command()
 async def ping(ctx):
 	await bot.say(":ping_pong: pong!!")
 
@@ -40,8 +41,5 @@ async def origine(ctx):
 	
 @bot.command()
 async def music(ctx):
-	await bot.say("pas encore coder.")
-
-
-bot.run(str(os.environ.get('BOT_TOKEN')))
+	await bot.say("pas encore coder.")"""
 
