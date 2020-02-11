@@ -23,23 +23,23 @@ async def on_ready():
 	#def __init__(self, bot):
 		#self.bot = bot
 
-@bot.command(pass_context = True)
+@bot.command()
 async def ping(ctx):
 	await bot.say(":ping_pong: pong!!")
 
-@bot.command(pass_context = True)
+@bot.command()
 async def bon(ctx):
 	await bot.say("jour")
 	
-@bot.command(pass_context = True)
+@bot.command()
 async def salut(ctx, user: discord.Member):
 	await bot.say("Bonjour {} :wave:".format(user.name))
 	
-@bot.command(pass_context = True)
+@bot.command()
 async def origine(ctx):
 	await bot.say("Mon code a été réaliser par KARIM")
 	
-@bot.command(pass_context = True)
+@bot.command()
 async def music(ctx):
 	await bot.say("pas encore coder.")
 
