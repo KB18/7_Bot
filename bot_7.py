@@ -2,12 +2,22 @@
 
 import discord
 from discord.ext import commands
-from discord.ext.commands import Bot 
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import asyncio
 import os
 
+api = str(os.environ.get('RIOT_KEY'))
+
+#startup_extensions = ["Music"]
+bot = commands.Bot(command_prefix='*')
+
+@bot.event
+async def on_ready():
+	print("je suis pret")
+	print("Je m'appele " + bot.user.name)
+	print("mon id est " + bot.user.id)
+	
 @bot.command()
 async def ping(ctx):
 	await bot.say(":ping_pong: pong!!")
