@@ -19,23 +19,23 @@ async def on_ready():
 	
 @bot.command()
 async def ping(ctx):
-	await bot.send(":ping_pong: pong!!")
+	await ctx.send(":ping_pong: pong!!")
 
 @bot.command()
 async def bon(ctx):
-	await bot.send("jour")
+	await ctx.send("jour")
 	
 @bot.command()
 async def salut(ctx, user: discord.Member):
-	await bot.send("Bonjour {} :wave:".format(user.name))
+	await ctx.send("Bonjour {} :wave:".format(user.name))
 	
 @bot.command()
 async def origine(ctx):
-	await bot.send("Mon code a été réaliser par KARIM")
+	await ctx.send("Mon code a été réaliser par KARIM")
 	
 @bot.command()
 async def music(ctx):
-	await bot.send("pas encore coder.")
+	await ctx.send("pas encore coder.")
 
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
