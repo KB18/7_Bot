@@ -104,4 +104,4 @@ async def music(ctx):
 	await ctx.send("pas encore coder.")
 
 
-bot.run('NDM0NzU2NTYwNDYwMTg1NjAw.XkWDhg.8_IMfnhsdp31GBoKvRYTYZW_6ug')
+bot.run(str(os.environ.get('BOT_TOKEN')))
