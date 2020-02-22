@@ -6,7 +6,6 @@ from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import asyncio
 import os
-import youtube_dl
 from vote import*
 
 api = str(os.environ.get('RIOT_KEY'))
