@@ -90,6 +90,10 @@ async def votes(ctx, contenue_txt_vote):
 
 '''------------------------------------------commande autre-------------------------------------'''
 @bot.command()
+async def presentation(ctx):
+	await ctx.send("SALUTATION CAMARADES, JE M'APPELLE EL KARIM ET J'AI REJOINT VOS RANGS POUR VOUS EPAULEZ DANS VOTRE COMBAT !!")
+
+@bot.command()
 async def ping(ctx):
 	await ctx.send(":ping_pong: pong !! ha bah je sais pas encore faire sa car mon dev et pas trés malin mais un jour ki sais !!")
 
