@@ -28,7 +28,7 @@ async def on_command_error(ctx, error):
 		texte += "tu devrais utiliser la commande help pour savoir comment utiliser cette commande"
 		await ctx.send(texte)
 	else:
-		print(error)
+		await ctx.send("ERREUR : JE NE BLAGUE PAS ERREUR OHOHOOHOHO DIT LE AU PLUS VITE AU FRERO KARIM")
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -74,15 +74,15 @@ async def votes(ctx, contenue_txt_vote):
 		await ctx.send(embed=embed)
 
 	elif(contenue_txt_vote == "close"):
-		if vote != None:
+		if vote != None and ctx.message.author.name == vote.get_Auteur():
 			texte_fin_vote = vote.closeVote()
 			await ctx.send(texte_fin_vote)
 			vote = None
 		else:
-			await ctx.send(":boom: :fire: :no_entry_sign: :no_entry: ALERTE :no_entry: :no_entry_sign: :fire: :boom: : Quelqu'un a essayé d'attaquer la démocratie\n VERMINE NE RECOMMENCER PLUS JAMAIS \n LA DEMOCRATIE VAINCRA \n GLOIRE A LA NATION")
-
+			await ctx.send(":boom: :fire: :no_entry_sign: :no_entry: ALERTE :no_entry: :no_entry_sign: :fire: :boom: : \n Quelqu'un a essayé d'attaquer la démocratie\n VERMINE NE RECOMMENCER PLUS JAMAIS \n LA DEMOCRATIE VAINCRA \n GLOIRE A LA NATION")
+			await ctx.send("------------------\nNE RECOMMENCE PAS !!!! \nje t'ai a l'oeil {} !!".format(str(ctx.message.author.name)))
 	else:	
-		vote = Vote(str(contenue_txt_vote))
+		vote = Vote(str(contenue_txt_vote), str(ctx.message.author.name))
 		msg = await ctx.send("LE VOTE DE LA NATION\n"+contenue_txt_vote)
 		reactions = ['✅', '❎']
 		for emoji in reactions:
@@ -91,19 +91,19 @@ async def votes(ctx, contenue_txt_vote):
 '''------------------------------------------commande autre-------------------------------------'''
 @bot.command()
 async def ping(ctx):
-	await ctx.send(":ping_pong: pong!!")
+	await ctx.send(":ping_pong: pong !! ha bah je sais pas encore faire sa car mon dev et pas trés malin mais un jour ki sais !!")
 
 @bot.command()
 async def bon(ctx):
-	await ctx.send("jour")
+	await ctx.send("jour ! MDR tu t'y attendais pas hein :joy:")
 	
 @bot.command()
-async def salut(ctx, user: discord.Member):
-	await ctx.send("Bonjour {} :wave:".format(user.name))
+async def salut(ctx):
+	await ctx.send("Salutation, camarade {} !! L'UNION FAIT LA FORCE, \nHEUREUX QUE TU ES REJOINT NOS RENDS, \nENSEMBLE NOUS NOUS BATTRONS ET VAINCRONS POUR LE BIEN DE L'HUMANITÉ".format(str(ctx.message.author.name)))
 	
 @bot.command()
 async def origine(ctx):
-	await ctx.send("Mon code a été réaliser par KARIM")
+	await ctx.send("Mon code a été réaliser par KARIM aka KARIM LE FONDATEUR")
 '''------------------------------------------commande pour la musique-------------------------------------'''
 
 

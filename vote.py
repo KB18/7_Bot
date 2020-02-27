@@ -1,12 +1,13 @@
 class Vote:
     cpt_vote = 0
 
-    def __init__(self, titre):
+    def __init__(self, titre, auteur):
         self.titre = titre
         self.id_vote = int(Vote.cpt_vote) + 0
         self.nb_vote = 0
         self.nb_oui = 0
         self.nb_non = 0
+        self.auteur = auteur
         self.tab_votant = []
         Vote.cpt_vote += 1
     '''Getter et mutateur'''
@@ -20,6 +21,8 @@ class Vote:
         return self.titre
     def get_IdVote(self):
         return self.id_vote
+    def get_Auteur(self):
+        return self.auteur
 
     def set_Nb_oui(self, nb):
         self.nb_oui = int(nb)
