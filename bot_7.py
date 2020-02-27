@@ -34,11 +34,11 @@ async def on_command_error(ctx, error):
 async def on_reaction_add(reaction, user):
 	global channel
 	global vote
-	channel_actu = reaction.message.channel
 	'''print(channel_actu)
-	print(channel)'''
+	print(channel)
+	'''
 
-	if (str(channel_actu) == str(channel) and vote != None):
+	if (vote != None):
 		print(reaction.emoji)
 
 		''' on ajoute 1 a la var oui de l obj vote'''
