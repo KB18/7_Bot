@@ -55,8 +55,12 @@ class Vote:
             print(i)
     
     def closeVote(self):
-        La_fin = "LE VOTE n° "+str(self.get_IdVote())+" EST FINI VOICI LES RESULTATS"
-        La_fin +=" \nNOMBRE DE VOTANT : "+str(self.get_Nb_vote())
-        La_fin +="\nNOMBRE DE OUI :"+str(self.get_Nb_oui())
-        La_fin +="\nNOMBRE DE NON :"+str(self.get_Nb_non())
+        La_fin = "LE VOTE n° "+str(self.get_IdVote())+" EST FINI \nVOICI LES RESULTATS :"
+        La_fin +=" \nnombre de VOTANT : "+str(self.get_Nb_vote())
+        La_fin +="\nnombre de OUI :"+str(self.get_Nb_oui())
+        La_fin +="\nnombre de NON :"+str(self.get_Nb_non())
+        if(self.get_Nb_oui() > self.get_Nb_non()):
+            La_fin += "\n C donc un GRAND OUI !! \n la proposition est donc accepter et tous sera mis en oeuvre pour appliquer cette decision."
+        else:
+            La_fin += "\n C donc un GRAND NON !! \n la proposition n'est donc pas accepter !!"
         return str(La_fin)
