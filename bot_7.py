@@ -104,6 +104,14 @@ async def salut(ctx):
 @bot.command()
 async def origine(ctx):
 	await ctx.send("Mon code a été réaliser par KARIM aka KARIM LE FONDATEUR")
+
+@bot.command()
+async def version(ctx):
+	await ctx.send("Version 1.0 ! camarade {}".format(str(ctx.message.author.name)))
+
+@bot.command()
+async def orthographe(ctx):
+	await ctx.send("fait pas attention a mon orthographe elle va s'ameliorer un jour")
 '''------------------------------------------commande pour la musique-------------------------------------'''
 
 
@@ -115,6 +123,8 @@ async def help(ctx):
 	texte += "salut\n"
 	texte += "origine\n"
 	texte += "votes\n"
+	texte += "version\n"
+	texte += "orthographe\n"
 	embed = discord.Embed(
 		description = texte,
 		colour = discord.Colour.green()
