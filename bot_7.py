@@ -129,6 +129,7 @@ async def help(ctx):
 	texte += "votes\n"
 	texte += "version\n"
 	texte += "orthographe\n"
+	texte += "presentation\n"
 	embed = discord.Embed(
 		description = texte,
 		colour = discord.Colour.green()
