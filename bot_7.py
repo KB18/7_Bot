@@ -84,11 +84,14 @@ async def votes(ctx, contenue_txt_vote):
 			await ctx.send(":boom: :fire: :no_entry_sign: :no_entry: ALERTE :no_entry: :no_entry_sign: :fire: :boom: : \n Quelqu'un a essayé d'attaquer la démocratie\n VERMINE NE RECOMMENCER PLUS JAMAIS \n LA DEMOCRATIE VAINCRA \n GLOIRE A LA NATION")
 			await ctx.send("------------------\nNE RECOMMENCE PAS !!!! \nje t'ai a l'oeil {} !!".format(str(ctx.message.author.name)))
 	else:	
-		vote = Vote(str(contenue_txt_vote), str(ctx.message.author.name))
-		msg = await ctx.send("LE VOTE DE LA NATION\n"+contenue_txt_vote)
-		reactions = ['✅', '❎']
-		for emoji in reactions:
-			await msg.add_reaction(emoji)
+		if(vote != None):
+			await ctx.send('VOTE actuellement en cours !!')
+		else:
+			vote = Vote(str(contenue_txt_vote), str(ctx.message.author.name))
+			msg = await ctx.send("LE VOTE DE LA NATION\n"+contenue_txt_vote)
+			reactions = ['✅', '❎']
+			for emoji in reactions:
+				await msg.add_reaction(emoji)
 
 '''------------------------------------------commande autre-------------------------------------'''
 @bot.command()
