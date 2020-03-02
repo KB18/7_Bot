@@ -63,7 +63,7 @@ async def votes(ctx, contenue_txt_vote):
 	global vote
 	if(contenue_txt_vote == ""):
 		await ctx.send('Erreur')
-	elif(vote == None):
+	elif(vote != None):
 		await ctx.send('VOTE actuellement en cours !!')
 	elif(contenue_txt_vote == "help"):
 		texte = " votes <intituler du vote entre guillemets> : permet de creer un vote\n"
