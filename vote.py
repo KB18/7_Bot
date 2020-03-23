@@ -1,4 +1,4 @@
-import json
+#import json
 
 class Vote:
     cpt_vote = 0
@@ -66,5 +66,5 @@ class Vote:
         else:
             La_fin += "\n C donc un GRAND NON !! \n la proposition n'est donc pas accepter !!"
         return str(La_fin)
-    def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
+    '''def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)'''

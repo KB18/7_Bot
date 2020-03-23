@@ -6,10 +6,10 @@ from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import asyncio
 import os
-from vote import*
+from vote import *
 
 api = str(os.environ.get('RIOT_KEY'))
-bot = commands.Bot(command_prefix='$')
+bot = commands.Bot(command_prefix='*')
 bot.remove_command('help')
 channel = "test_bot"
 vote = None
@@ -114,11 +114,17 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 1.0 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 2.0 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
 	await ctx.send("fait pas attention a mon orthographe elle va s'ameliorer un jour")
+@bot.command()
+async def code(ctx, lang, *, content):
+	texte = " ```"+str(lang)+"\n"
+	texte += content
+	texte += "\n```"
+	await ctx.send(texte)
 '''------------------------------------------commande pour la musique-------------------------------------'''
 
 
@@ -133,6 +139,7 @@ async def help(ctx):
 	texte += "version\n"
 	texte += "orthographe\n"
 	texte += "presentation\n"
+	texte += "code\n"
 	embed = discord.Embed(
 		description = texte,
 		colour = discord.Colour.green()
