@@ -9,7 +9,7 @@ import os
 from vote import *
 
 api = str(os.environ.get('RIOT_KEY'))
-bot = commands.Bot(command_prefix='*')
+bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 channel = "test_bot"
 vote = None
@@ -17,9 +17,9 @@ players = {}
 
 @bot.event
 async def on_ready():
+	await bot.change_presence(game=discord.Game(name="$help"))
 	print("je suis pret")
 	print("Je m'appele " + str(bot.user.name))
-	print("mon id est " + str(bot.user.id))
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -28,6 +28,7 @@ async def on_command_error(ctx, error):
 		texte += "tu devrais utiliser la commande help pour savoir comment utiliser cette commande"
 		await ctx.send(texte)
 	else:
+		print(error)
 		await ctx.send("ERREUR : JE NE BLAGUE PAS ERREUR OHOHOOHOHO DIT LE AU PLUS VITE AU FRERO KARIM")
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
 @bot.event
@@ -114,16 +115,18 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 2.0 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 2.5 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
 	await ctx.send("fait pas attention a mon orthographe elle va s'ameliorer un jour")
 @bot.command()
 async def code(ctx, lang, *, content):
+	await ctx.channel.purge(limit=1)
 	texte = " ```"+str(lang)+"\n"
 	texte += content
 	texte += "\n```"
+	texte += "*** Ecrit par ***"+str(ctx.message.author.mention)
 	await ctx.send(texte)
 '''------------------------------------------commande pour la musique-------------------------------------'''
 
