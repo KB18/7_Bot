@@ -17,7 +17,7 @@ players = {}
 
 @bot.event
 async def on_ready():
-	await bot.change_presence(game=discord.Game(name="$help"))
+	await bot.change_presence(activity=discord.Game(name="$help"))
 	print("je suis pret")
 	print("Je m'appele " + str(bot.user.name))
 
