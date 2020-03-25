@@ -121,8 +121,8 @@ async def version(ctx):
 async def orthographe(ctx):
 	await ctx.send("fait pas attention a mon orthographe elle va s'ameliorer un jour")
 @bot.command()
-async def code(ctx, lang, *, content):
-	if lang == "help":
+async def code(ctx, lang, *, content=""):
+	if lang == "help" and content == "":
 		texte = "$codes <nom du code> <code brut> : permet d'envoyer du code de manière propre (coloré, etc...)"
 		embed = discord.Embed(
 			description = texte,
