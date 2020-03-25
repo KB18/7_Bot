@@ -71,7 +71,7 @@ async def votes(ctx, contenue_txt_vote):
 			description = texte,
 			colour = discord.Colour.green()
 		)
-		embed.set_author(name="Les differrente utilisation de cette commande sont : ")
+		embed.set_author(name="Les differente utilisation de cette commande sont : ")
 		await ctx.send(embed=embed)
 
 	elif(contenue_txt_vote == "close"):
@@ -95,7 +95,7 @@ async def votes(ctx, contenue_txt_vote):
 '''------------------------------------------commande autre-------------------------------------'''
 @bot.command()
 async def presentation(ctx):
-	await ctx.send("SALUTATION CAMARADES, JE M'APPELLE EL KARIM ET J'AI REJOINT VOS RANGS POUR VOUS EPAULEZ DANS VOTRE COMBAT !!")
+	await ctx.send("SALUTATION CAMARADES, JE M'APPELLE MIRAK ET J'AI REJOINT VOS RANGS POUR VOUS EPAULEZ DANS VOTRE COMBAT !!")
 
 @bot.command()
 async def ping(ctx):
@@ -115,7 +115,7 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 2.6 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 2.8 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
@@ -128,7 +128,7 @@ async def code(ctx, lang, *, content=""):
 			description = texte,
 			colour = discord.Colour.green()
 		)
-		embed.set_author(name="Les differrente utilisation de cette commande sont : ")
+		embed.set_author(name="Les differente utilisation de cette commande sont : ")
 		await ctx.send(embed=embed)
 	else:
 		await ctx.channel.purge(limit=1)
