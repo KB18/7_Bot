@@ -115,19 +115,28 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 2.5 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 2.6 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
 	await ctx.send("fait pas attention a mon orthographe elle va s'ameliorer un jour")
 @bot.command()
 async def code(ctx, lang, *, content):
-	await ctx.channel.purge(limit=1)
-	texte = " ```"+str(lang)+"\n"
-	texte += content
-	texte += "\n```"
-	texte += "*** Ecrit par ***"+str(ctx.message.author.mention)
-	await ctx.send(texte)
+	if lang == "help":
+		texte = "$codes <nom du code> <code brut> : permet d'envoyer du code de manière propre (coloré, etc...)"
+		embed = discord.Embed(
+			description = texte,
+			colour = discord.Colour.green()
+		)
+		embed.set_author(name="Les differrente utilisation de cette commande sont : ")
+		await ctx.send(embed=embed)
+	else:
+		await ctx.channel.purge(limit=1)
+		texte = " ```"+str(lang)+"\n"
+		texte += content
+		texte += "\n```"
+		texte += "*** Ecrit par ***"+str(ctx.message.author.mention)
+		await ctx.send(texte)
 '''------------------------------------------commande pour la musique-------------------------------------'''
 
 
