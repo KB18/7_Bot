@@ -100,6 +100,7 @@ async def presentation(ctx):
 @bot.command()
 async def ping(ctx):
 	await ctx.send(":ping_pong: pong !! ha bah je sais pas encore faire sa car mon dev et pas trés malin mais un jour ki sais !!")
+	await ctx.send(' et bah mtn je sais le faire les frères !!! {0} !!'.format(round(bot.latency, 1))
 
 @bot.command()
 async def bon(ctx):
@@ -115,7 +116,7 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 2.8 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 2.9 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
