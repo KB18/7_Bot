@@ -31,13 +31,19 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
+	titre = ":x: ERREUR :interrobang:"
+	texte = ""
 	if isinstance(error, commands.MissingRequiredArgument):
-		texte = "il manque un argument !!!!\n"
+		texte = "il manque un argument lors de ton utilisation de cette commande !!!!\n"
 		texte += "tu devrais utiliser la commande help pour savoir comment utiliser cette commande"
-		await ctx.send(texte)
+	elif isinstance(error, commands.CommandNotFound):
+		texte = "Commande Invalide ou Inexistante"
 	else:
 		print(error)
-		await ctx.send("ERREUR : JE NE BLAGUE PAS ERREUR OHOHOOHOHO DIT LE AU PLUS VITE AU FRERO KARIM")
+		texte = "ERREUR : JE NE BLAGUE PAS ERREUR OHOHOOHOHO DIT LE AU PLUS VITE AU FRERO KARIM"
+
+	'''------embed pour affichage erreur--------'''
+	await envoi(ctx, titre, texte)
 
 async def envoi(ctx, titre, texte, auteur="", desti=""):
 	
@@ -138,7 +144,7 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 14.0 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version 14.5 ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
@@ -348,7 +354,7 @@ async def join(ctx, guild):
 @bot.command()
 async def joue(ctx, url, *, content=""):
 	#variable utile dans tout la def
-	auteur = ctx.message.author
+	auteur = ctx.message.author.name
 	guild = ctx.message.guild
 	titre = "Music"
 
@@ -466,7 +472,7 @@ async def help(ctx):
 
 	titre = 'Commande HELP'
 
-	await envoi(ctx, titre, texte, "help")
+	await envoi(ctx, titre, texte, "@KARIM#9286", "help")
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
 
