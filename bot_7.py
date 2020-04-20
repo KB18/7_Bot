@@ -45,16 +45,16 @@ async def on_command_error(ctx, error):
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
 
-async def envoi(ctx, titre, texte, auteur="", desti=""):
+async def envoi(ctx, titre, texte, auteur="", avatar="", desti=""):
 	
 	embed = discord.Embed(
 		description = texte,
 		colour = discord.Colour.blue(),
 		title = "**"+titre+"**"
 	)
-	if auteur != "" and desti == "music":
-		embed.set_footer(text="Ajouter par : "+auteur)
-	if auteur != "" and desti == "Help":
+	if auteur != "" and avatar != "" and desti == "music":
+		embed.set_footer(text="Ajouter par : "+auteur, icon_url=avatar)
+	if auteur != "" and desti == "help":
 		embed.set_footer(text="Inventé et codé par : "+auteur)
 
 	await ctx.send(embed=embed)
@@ -170,13 +170,15 @@ async def code(ctx, lang, *, content=""):
 
 
 @bot.command()
-async def insulte(ctx):
+async def insulte(ctx, message):
 	table_isultes = []
-	nb_alea = randint(0, 4)
+	nb_alea = randint(0, 310)
 	with open("insulte.txt", "r") as f:
 		for insulte in f.readlines():
 			table_isultes.append(insulte)
-	await ctx.send(str(table_isultes[nb_alea]))
+	msg = str(message)+"  ->  " + str(table_isultes[nb_alea])
+	msg += "cela a été prouvé"
+	await ctx.send(msg)
 
 
 '''------------------------------------------commande pour la musique-------------------------------------'''
@@ -354,7 +356,8 @@ async def join(ctx, guild):
 @bot.command()
 async def joue(ctx, url, *, content=""):
 	#variable utile dans tout la def
-	auteur = ctx.message.author.name
+	auteur = ctx.message.author.mention
+	avatar_auteur = ctx.message.author.avatar_url
 	guild = ctx.message.guild
 	titre = "Music"
 
@@ -370,7 +373,7 @@ async def joue(ctx, url, *, content=""):
 		add_queue(ctx, guild, url)
 
 
-		await envoi(ctx, titre, "Ajout de : \n"+str(recherche_youtube_titre.main(url)), auteur, "music")
+		await envoi(ctx, titre, "Ajout de : \n"+str(recherche_youtube_titre.main(url)), auteur, avatar_auteur, "music")
 
 	else :
 		recherche_music = str(url)+" "+content
@@ -386,7 +389,7 @@ async def joue(ctx, url, *, content=""):
 		add_queue(ctx, guild, url_trouver)
 
 
-		await envoi(ctx, titre, "Ajout de : ["+titreMusic+"]("+url_trouver+")", auteur, "music")
+		await envoi(ctx, titre, "Ajout de : ["+titreMusic+"]("+url_trouver+")", auteur, avatar_auteur, "music")
 		
 
 @bot.command()
@@ -472,7 +475,7 @@ async def help(ctx):
 
 	titre = 'Commande HELP'
 
-	await envoi(ctx, titre, texte, "@KARIM#9286", "help")
+	await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", "help")
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
 
