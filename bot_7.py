@@ -16,6 +16,9 @@ import recherche_youtube_titre
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
+
+version_bot = "15.5"
+
 channel = "test_bot"
 vote = None
 players = {}
@@ -144,7 +147,7 @@ async def origine(ctx):
 
 @bot.command()
 async def version(ctx):
-	await ctx.send("Version 14.5 ! camarade {}".format(str(ctx.message.author.name)))
+	await ctx.send("Version "+version_bot+" ! camarade {}".format(str(ctx.message.author.name)))
 
 @bot.command()
 async def orthographe(ctx):
@@ -356,7 +359,7 @@ async def join(ctx, guild):
 @bot.command()
 async def joue(ctx, url, *, content=""):
 	#variable utile dans tout la def
-	auteur = ctx.message.author.mention
+	auteur = ctx.message.author.name
 	avatar_auteur = ctx.message.author.avatar_url
 	guild = ctx.message.guild
 	titre = "Music"
@@ -475,7 +478,7 @@ async def help(ctx):
 
 	titre = 'Commande HELP'
 
-	await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", "help")
+	await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", desti="help")
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
 
