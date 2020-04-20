@@ -468,5 +468,5 @@ async def help(ctx):
 
 	await envoi(ctx, titre, texte, "help")
 
-#bot.run(str(os.environ.get('BOT_TOKEN')))
-bot.run('NDM0NzU2NTYwNDYwMTg1NjAw.Xoyghg.ZCObu-roWjAdCIJgwcvyKiJ8yqk')
+bot.run(str(os.environ.get('BOT_TOKEN')))
+
