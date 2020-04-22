@@ -17,9 +17,9 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "15.5"
+version_bot = "15.7"
 
-channel = "test_bot"
+#channel = "test_bot"
 vote = None
 players = {}
 queues = {}
@@ -65,7 +65,6 @@ async def envoi(ctx, titre, texte, auteur="", avatar="", desti=""):
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
 @bot.event
 async def on_reaction_add(reaction, user):
-	global channel
 	global vote
 	'''print(channel_actu)
 	print(channel)
