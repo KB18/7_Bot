@@ -12,6 +12,8 @@ import youtube_dl
 #Code fait pour l'occasion
 import recherche_youtube
 import recherche_youtube_titre
+from Spammage import Spammage
+from embedEnvoi import envoi
 
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
@@ -25,6 +27,8 @@ players = {}
 queues = {}
 queues_titre = {}
 player = None
+
+spams = {}
 
 @bot.event
 async def on_ready():
@@ -47,20 +51,6 @@ async def on_command_error(ctx, error):
 
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
-
-async def envoi(ctx, titre, texte, auteur="", avatar="", desti=""):
-	
-	embed = discord.Embed(
-		description = texte,
-		colour = discord.Colour.blue(),
-		title = "**"+titre+"**"
-	)
-	if auteur != "" and avatar != "" and desti == "music":
-		embed.set_footer(text="Ajouter par : "+auteur, icon_url=avatar)
-	if auteur != "" and desti == "help":
-		embed.set_footer(text="Inventé et codé par : "+auteur)
-
-	await ctx.send(embed=embed)
 
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
 @bot.event
@@ -182,7 +172,25 @@ async def insulte(ctx, message):
 	msg += "cela a été prouvé"
 	await ctx.send(msg)
 
+@bot.command()
+async def trad(ctx, message):
+	pass	
 
+@bot.command()
+async def spammention(ctx, message):
+	auteur = ctx.message.author.name
+	guild = ctx.message.guild
+	spam = Spammage(auteur, message)
+	spam.lancement(ctx)
+	if spams[guild.id] != None:
+		spams[guild.id] = spam
+	await ctx.send("Spam commence")
+@bot.command()
+async def Stopspammention(ctx):
+	guild = ctx.message.guild
+	if spams[guild.id] != None:
+		spams[guild.id].stop()
+	await ctx.send("Spam stop")
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
@@ -473,6 +481,7 @@ async def help(ctx):
 	texte += "resume\n"
 	texte += "next\n"
 	texte += "purgeQueue\n"
+	texte += "spammention\n"
 	texte += "---------------------\n"
 
 	titre = 'Commande HELP'
