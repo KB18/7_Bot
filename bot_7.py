@@ -12,7 +12,6 @@ import youtube_dl
 #Code fait pour l'occasion
 import recherche_youtube
 import recherche_youtube_titre
-from Spammage import Spammage
 from embedEnvoi import envoi
 
 api = str(os.environ.get('RIOT_KEY'))
@@ -27,8 +26,6 @@ players = {}
 queues = {}
 queues_titre = {}
 player = None
-
-spams = {}
 
 @bot.event
 async def on_ready():
@@ -177,20 +174,11 @@ async def trad(ctx, message):
 	pass	
 
 @bot.command()
-async def spammention(ctx, message):
+async def spammention(ctx, nb, message):
 	auteur = ctx.message.author.name
-	guild = ctx.message.guild
-	spam = Spammage(auteur, message)
-	await spam.lancement(ctx)
-	if spams[guild.id] != None:
-		spams[guild.id] = spam
 	await ctx.send("Spam commence")
-@bot.command()
-async def Stopspammention(ctx):
-	guild = ctx.message.guild
-	if spams[guild.id] != None:
-		spams[guild.id].stop()
-	await ctx.send("Spam stop")
+	for i in range(int(nb)):
+            await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
