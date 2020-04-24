@@ -19,7 +19,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "15.7"
+version_bot = "15.9"
 
 #channel = "test_bot"
 vote = None
@@ -181,7 +181,7 @@ async def spammention(ctx, message):
 	auteur = ctx.message.author.name
 	guild = ctx.message.guild
 	spam = Spammage(auteur, message)
-	spam.lancement(ctx)
+	await spam.lancement(ctx)
 	if spams[guild.id] != None:
 		spams[guild.id] = spam
 	await ctx.send("Spam commence")
