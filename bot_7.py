@@ -180,7 +180,11 @@ async def spammention(ctx, nb:int, message):
 	for i in range(int(nb)):
 		await ctx.send(message)
 	await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
-			
+@bot.command()
+async def purge(ctx, nb):
+		auteur = ctx.message.author.name
+		if auteur == "KARIM":
+			await ctx.channel.purge(limit=nb)
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
