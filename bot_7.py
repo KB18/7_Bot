@@ -194,10 +194,10 @@ async def purge(ctx, nb):
 async def horairepriere(ctx):
 	nom_priere, horaire_priere = recherche_horaire_priere.main()
 	texte = ""
-	for i in range(5):
-		texte += "----------"+nom_priere[i]+"---------- : \n"
+	for i in range(6):
+		texte += "---------- "+nom_priere[i]+" ---------- : \n"
 		texte += horaire_priere[i]+"\n"
-	await envoi(ctx, ":mosque: Horaire de la prière :mosque:", texte, auteur="[mosquee-lyon.org](http://mosquee-lyon.org/)", desti="horairepriere")
+	await envoi(ctx, ":mosque: Horaire de la prière :mosque:", texte, auteur="[Mosquée de Lyon](http://mosquee-lyon.org/)", desti="horairepriere")
 
 @bot.command()
 async def ftour(ctx):
