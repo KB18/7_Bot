@@ -195,9 +195,9 @@ async def horairepriere(ctx):
 	nom_priere, horaire_priere = recherche_horaire_priere.main()
 	texte = ""
 	for i in range(5):
-		texte += "          "+nom_priere[i]+"          \n"
-		texte += "          "+horaire_priere[i]+"          \n"
-	await envoi(ctx, ":mosque: Horaire de la prière :mosque:", texte, auteur="[mosquee-lyon.org] (http://mosquee-lyon.org/)", desti="horairepriere")
+		texte += "----------"+nom_priere[i]+"---------- : \n"
+		texte += horaire_priere[i]+"\n"
+	await envoi(ctx, ":mosque: Horaire de la prière :mosque:", texte, auteur="[mosquee-lyon.org](http://mosquee-lyon.org/)", desti="horairepriere")
 
 @bot.command()
 async def ftour(ctx):
