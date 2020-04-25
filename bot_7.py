@@ -196,7 +196,7 @@ async def horairepriere(ctx):
 	texte = ""
 	for i in range(6):
 		texte += "---------- "+nom_priere[i]+" ---------- : \n"
-		texte += "\t\t\t"+horaire_priere[i]+"\n"
+		texte += "\v&nbsp;"+horaire_priere[i]+"\n"
 	await envoi(ctx, ":mosque: HORAIRES DE PRIÈRES :mosque:", texte, auteur="[Mosquée de Lyon](http://mosquee-lyon.org/)", desti="horairepriere")
 
 @bot.command()
