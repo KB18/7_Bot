@@ -76,7 +76,7 @@ async def on_reaction_add(reaction, user):
 
 '''------------------------------------------commande pour le vote-------------------------------------'''
 @bot.command()
-async def votes(ctx, contenue_txt_vote):
+async def votes(ctx, contenue_txt_vote:str):
 
 	contenue_txt_vote = str(contenue_txt_vote)
 	global vote
@@ -174,11 +174,13 @@ async def trad(ctx, message):
 	pass	
 
 @bot.command()
-async def spammention(ctx, nb, message):
+async def spammention(ctx, nb:int, message):
 	auteur = ctx.message.author.name
 	await ctx.send("Spam commence")
 	for i in range(int(nb)):
-            await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
+		await ctx.send(message)
+	await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
+			
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
