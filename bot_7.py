@@ -183,8 +183,8 @@ async def spammention(ctx, nb:int, message):
 @bot.command()
 async def purge(ctx, nb):
 		auteur = ctx.message.author.name
-		if auteur == "KARIM":
-			await ctx.channel.purge(limit=nb)
+		if str(auteur) == "KARIM":
+			await ctx.channel.purge(limit=int(nb))
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
