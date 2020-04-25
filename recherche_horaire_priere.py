@@ -51,4 +51,3 @@ def main():
         htmlString = htmlBytes.decode("utf-8")
         parser.feed(htmlString)
     return parser.resulte()
-print(main())
