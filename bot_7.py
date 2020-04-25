@@ -13,12 +13,13 @@ import youtube_dl
 import recherche_youtube
 import recherche_youtube_titre
 from embedEnvoi import envoi
+import recherche_horaire_priere
 
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "15.9"
+version_bot = "16.0"
 
 #channel = "test_bot"
 vote = None
@@ -180,11 +181,27 @@ async def spammention(ctx, nb:int, message):
 	for i in range(int(nb)):
 		await ctx.send(message)
 	await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
+
 @bot.command()
 async def purge(ctx, nb):
 		auteur = ctx.message.author.name
 		if str(auteur) == "KARIM":
 			await ctx.channel.purge(limit=int(nb))
+		else:
+			await ctx.send("VOUS N'ETES pas autorisé")
+			
+@bot.command()
+async def horairepriere(ctx):
+	nom_priere, horaire_priere = recherche_horaire_priere.main()
+	texte = ""
+	for i in range(5):
+		texte += "			"+nom_priere[i]+"			\n"
+		texte += "			"+horaire_priere[i]+"			\n"
+	await envoi(ctx, ":mosque: Horaire de la prière :mosque:", texte, auteur="[mosquee-lyon.org](http://mosquee-lyon.org/)", desti="horairepriere")
+
+@bot.command()
+async def ftour(ctx):
+	pass
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
@@ -476,6 +493,7 @@ async def help(ctx):
 	texte += "next\n"
 	texte += "purgeQueue\n"
 	texte += "spammention\n"
+	texte += "horairepriere"
 	texte += "---------------------\n"
 
 	titre = 'Commande HELP'

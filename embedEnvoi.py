@@ -12,6 +12,8 @@ async def envoi(ctx, titre, texte, auteur="", avatar="", desti=""):
 	if auteur != "" and desti == "help":
 		embed.set_footer(text="Inventé et codé par : "+auteur)
 	if auteur != "" and desti == "spam":
-		embed.set_footer(text="Cet personne est entrain de spammer : "+auteur)
+		embed.set_footer(text="Ce spammage vous a été offert par : "+auteur)
+	if auteur != "" and desti == "horairepriere":
+		embed.set_footer(text="Source : "+auteur)
 
 	await ctx.send(embed=embed)
