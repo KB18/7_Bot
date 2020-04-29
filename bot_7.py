@@ -14,12 +14,13 @@ import recherche_youtube
 import recherche_youtube_titre
 from embedEnvoi import envoi
 import recherche_horaire_priere
+import recherche_horaire_priere_ramadan
 
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "16.0"
+version_bot = "17.0"
 
 #channel = "test_bot"
 vote = None
@@ -177,10 +178,14 @@ async def trad(ctx, message):
 @bot.command()
 async def spammention(ctx, nb:int, message):
 	auteur = ctx.message.author.name
+	avatar = auteur.avatar_url
 	await ctx.send("Spam commence")
-	for i in range(int(nb)):
-		await ctx.send(message)
-	await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, desti="spam")
+	if nb < 1000:
+		for i in range(int(nb)):
+			await ctx.send(message)
+		await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, avatar=avatar, desti="spam")
+	else:
+		await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, avatar=avatar, desti="spam")
 
 @bot.command()
 async def purge(ctx, nb):
@@ -198,6 +203,17 @@ async def horairepriere(ctx):
 		texte += "---------- "+nom_priere[i]+" ---------- : \n"
 		texte += "\t"+horaire_priere[i]+"\n"
 	await envoi(ctx, ":mosque: HORAIRES DE PRIÈRES :mosque:", texte, auteur="[Mosquée de Lyon](http://mosquee-lyon.org/)", desti="horairepriere")
+
+@bot.command()
+async def horairepriereramadan(ctx):
+	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+	texte = ""
+	for j in range(3):
+		texte += info_bonus[j]+"\n"
+	for i in range(6):
+		texte += "---------- "+nom_priere[i]+" ---------- : \n"
+		texte += "\t"+horaire_priere[i]+"\n"
+	await envoi(ctx, ":mosque: HORAIRES DE PRIÈRES :mosque:", texte, auteur="[Islamic Finder](http://"+info_bonus[4]+")", desti="horairepriere")
 
 @bot.command()
 async def ftour(ctx):
@@ -492,8 +508,10 @@ async def help(ctx):
 	texte += "resume\n"
 	texte += "next\n"
 	texte += "purgeQueue\n"
+	texte += "insulte"
 	texte += "spammention\n"
 	texte += "horairepriere\n"
+	texte += "horairepriereramadan\n"
 	texte += "---------------------\n"
 
 	titre = 'Commande HELP'
