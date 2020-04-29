@@ -20,7 +20,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "17.0"
+version_bot = "17.5"
 
 #channel = "test_bot"
 vote = None
@@ -178,14 +178,14 @@ async def trad(ctx, message):
 @bot.command()
 async def spammention(ctx, nb:int, message):
 	auteur = ctx.message.author.name
-	avatar = auteur.avatar_url
+	avatar = ctx.message.author.avatar_url
 	await ctx.send("Spam commence")
 	if nb < 1000:
 		for i in range(int(nb)):
 			await ctx.send(message)
 		await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, avatar=avatar, desti="spam")
 	else:
-		await envoi(ctx, titre="Spammage", texte=message, auteur=auteur, avatar=avatar, desti="spam")
+		await envoi(ctx, titre="Spammage", texte="Trop de spam tu le spam", auteur=auteur, avatar=avatar, desti="spam")
 
 @bot.command()
 async def purge(ctx, nb):
