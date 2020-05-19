@@ -21,7 +21,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "19.0"
+version_bot = "19.5"
 
 #channel = "test_bot"
 vote = None
@@ -225,7 +225,7 @@ async def gif(ctx, *, msg:str):
 	texte = str(msg)
 	auteur = ctx.message.author.name
 	auteur_avatar = ctx.message.author.avatar_url
-	img = recherche_gif_alea(msg)
+	img = recherche_gif_alea.main(msg)
 	if img != "gifs introuvable":
 		await envoi(ctx, titre, auteur=auteur, avatar=auteur_avatar, desti="gif", image=img)
 	else:
@@ -524,6 +524,7 @@ async def help(ctx):
 	texte += "spammention\n"
 	texte += "horairepriere\n"
 	texte += "horairepriereramadan\n"
+	texte += "gif\n"
 	texte += "---------------------\n"
 
 	titre = 'Commande HELP'
