@@ -1,6 +1,6 @@
 import discord
 import asyncio
-async def envoi(ctx, titre, texte, auteur="", avatar="", desti="", image=""):
+async def envoi(ctx, titre, texte="", auteur="", avatar="", desti="", image=""):
 	
 	embed = discord.Embed(
 		description = texte,

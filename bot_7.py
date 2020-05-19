@@ -15,12 +15,13 @@ import recherche_youtube_titre
 from embedEnvoi import envoi
 import recherche_horaire_priere
 import recherche_horaire_priere_ramadan
+import recherche_gif_alea
 
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "18.0"
+version_bot = "19.0"
 
 #channel = "test_bot"
 vote = None
@@ -224,7 +225,11 @@ async def gif(ctx, *, msg:str):
 	texte = str(msg)
 	auteur = ctx.message.author.name
 	auteur_avatar = ctx.message.author.avatar_url
-	await envoi(ctx, titre, texte, auteur=auteur, avatar=auteur_avatar, desti="gif", image="https://media1.tenor.com/images/dfd5671e5d4847a48be0d024abd03e72/tenor.gif")
+	img = recherche_gif_alea(msg)
+	if img != "gifs introuvable":
+		await envoi(ctx, titre, auteur=auteur, avatar=auteur_avatar, desti="gif", image=img)
+	else:
+		await ctx.send("OHHHHHHHHHHHHH t'es debilos ou quoi ?? pourquoi tu roule ta tete sur ton clavier ???")
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
