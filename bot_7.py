@@ -21,7 +21,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "19.5"
+version_bot = "20.0"
 
 #channel = "test_bot"
 vote = None
@@ -172,9 +172,6 @@ async def insulte(ctx, message):
 	msg += "cela a été prouvé"
 	await ctx.send(msg)
 
-@bot.command()
-async def trad(ctx, message):
-	pass	
 
 @bot.command()
 async def spammention(ctx, nb:int, message):
@@ -219,6 +216,7 @@ async def horairepriereramadan(ctx):
 @bot.command()
 async def ftour(ctx):
 	pass
+
 @bot.command()
 async def gif(ctx, *, msg:str):
 	titre ="**GIF**"

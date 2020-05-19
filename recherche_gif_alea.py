@@ -52,10 +52,20 @@ class GifAleaChercheur(HTMLParser):
             print(msg_err)
             return msg_err
 
+def formatClair(txt):
+    #rendre compatible le texte avec le lien
+    xtx = ""
+    cSpe = " "
+    for c in range(len(txt)):
+        if cSpe == txt[c]:
+            xtx += "-"
+        else:
+            xtx += txt[c]
+    return xtx
 
 def main(mot:str):
     parser = GifAleaChercheur()
-    url="https://tenor.com/search/"+mot+"-gifs"
+    url="https://tenor.com/search/"+formatClair(mot)+"-gifs"
     print('Ouverture de', url)
     try:
         response = urlopen(url)
