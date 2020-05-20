@@ -43,7 +43,7 @@ class GifAleaChercheur(HTMLParser):
                         self.cpt_result += 1
                         
     def gif(self):
-        if self.result != [] and self.cpt_result != 0:
+        if self.result != [] and self.cpt_result > 1:
             print("gifs trouver")
             nb_alea = randrange(0, self.cpt_result - 1)
             return self.result[nb_alea]

@@ -21,7 +21,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.5"
+version_bot = "20.75"
 
 #channel = "test_bot"
 vote = None
