@@ -27,7 +27,7 @@ class GifAleaChercheur(HTMLParser):
                 if txt[i] != mot[i]:
                     succes = False
         return succes
-        
+
     def handle_starttag(self, tag, attrs):
         if tag == "div":
             for name, value in attrs:
@@ -47,6 +47,8 @@ class GifAleaChercheur(HTMLParser):
             print("gifs trouver")
             nb_alea = randrange(0, self.cpt_result - 1)
             return self.result[nb_alea]
+        elif self.result != [] and self.cpt_result == 1:
+            return self.result[0]
         else:
             msg_err = "gifs introuvable"
             print(msg_err)

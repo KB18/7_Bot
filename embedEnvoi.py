@@ -20,6 +20,6 @@ async def envoi(ctx, titre, texte="", auteur="", avatar="", desti="", image=""):
 		embed.add_field(name="Source : ", value=auteur, inline=False)
 	if auteur != "" and desti =="gif" and image !="":
 		embed.set_image(url=image)
-		embed.set_footer(text="Affiché par :"+auteur, icon_url=avatar)
+		embed.set_footer(text="Affiché par "+auteur, icon_url=avatar)
 
 	await ctx.send(embed=embed)
