@@ -22,7 +22,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.9"
+version_bot = "20.95"
 
 #channel = "test_bot"
 vote = None
@@ -30,7 +30,8 @@ players = {}
 queues = {}
 queues_titre = {}
 player = None
-channel_horaire_priere = 'heure-de-la-priere'
+channel_horaire_priere = 'heures-de-la-priere'
+role_horaire_priere = "muslim"
 
 @bot.event
 async def on_ready():
@@ -63,7 +64,10 @@ async def time_check():
 		
 
 def verificateurHoraire(heure):
-	pass
+	for guild in bot.guilds:
+		for channel in guild.channels:
+			if channel == channel_horaire_priere:
+				channel.send("salut")
 
 
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
@@ -231,6 +235,8 @@ async def horairepriereramadan(ctx):
 async def muslimMission(ctx):
 	guild = ctx.message.guild
 	await guild.create_text_channel(channel_horaire_priere)
+	await guild.create_role(name=role_horaire_priere)
+	guild.channel_horaire_priere.set_permissions(ctx.guild.default_role, send_messages=False, read_message=False)
 
 @bot.command()
 async def gif(ctx, *, msg:str):
