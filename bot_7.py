@@ -16,12 +16,13 @@ from embedEnvoi import envoi
 import recherche_horaire_priere
 import recherche_horaire_priere_ramadan
 import recherche_gif_alea
+from datetime import datetime
 
 api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.75"
+version_bot = "20.9"
 
 #channel = "test_bot"
 vote = None
@@ -29,6 +30,7 @@ players = {}
 queues = {}
 queues_titre = {}
 player = None
+channel_horaire_priere = 'heure-de-la-priere'
 
 @bot.event
 async def on_ready():
@@ -42,7 +44,8 @@ async def on_command_error(ctx, error):
 	texte = ""
 	if isinstance(error, commands.MissingRequiredArgument):
 		texte = "il manque un argument lors de ton utilisation de cette commande !!!!\n"
-		texte += "tu devrais utiliser la commande help pour savoir comment utiliser cette commande"
+		texte += "tu devrais utiliser la commande help pour savoir comment utiliser cette commande\n"
+		texte += "(si l'aide existe sinon bon  courage !!)\n"
 	elif isinstance(error, commands.CommandNotFound):
 		texte = "Commande Invalide ou Inexistante"
 	else:
@@ -51,6 +54,17 @@ async def on_command_error(ctx, error):
 
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
+
+async def time_check():
+	await bot.wait_until_ready()
+	while not bot.is_closed:
+		now = datetime.now()
+		verificateurHoraire(now.hour)
+		
+
+def verificateurHoraire(heure):
+	pass
+
 
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
 @bot.event
@@ -214,8 +228,9 @@ async def horairepriereramadan(ctx):
 	await envoi(ctx, ":mosque: HORAIRES DE PRIÈRES :mosque:", texte, auteur="[Islamic Finder](http://"+info_bonus[4]+")", desti="horairepriere")
 
 @bot.command()
-async def ftour(ctx):
-	pass
+async def muslimMission(ctx):
+	guild = ctx.message.guild
+	await guild.create_text_channel(channel_horaire_priere)
 
 @bot.command()
 async def gif(ctx, *, msg:str):
@@ -528,6 +543,8 @@ async def help(ctx):
 	titre = 'Commande HELP'
 
 	await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", desti="help")
+
+bot.loop.create_task(time_check())
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
 
