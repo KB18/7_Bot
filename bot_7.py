@@ -236,7 +236,6 @@ async def muslimMission(ctx):
 	guild = ctx.message.guild
 	await guild.create_text_channel(channel_horaire_priere)
 	await guild.create_role(name=role_horaire_priere)
-	guild.channel_horaire_priere.set_permissions(ctx.guild.default_role, send_messages=False, read_message=False)
 
 @bot.command()
 async def gif(ctx, *, msg:str):
