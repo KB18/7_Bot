@@ -242,7 +242,7 @@ async def pin(ctx):
 	msg = await channel.history().find(lambda msg: msg.author.id == auteur_id)
 
 	if(msg != None):
-		await ctx.send(msg.content)
+		await msg.pin()
 	else:
 		await ctx.send("ahhhhhhhhhh impossible de trouver ton dernier message ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 
