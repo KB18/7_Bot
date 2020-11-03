@@ -22,7 +22,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.95"
+version_bot = "20.97"
 
 #channel = "test_bot"
 vote = None
@@ -208,6 +208,7 @@ async def purge(ctx, nb):
 		auteur = ctx.message.author.name
 		if str(auteur) == "KARIM":
 			await ctx.channel.purge(limit=int(nb))
+			await ctx.send("Ce fut un plaisir de vous aider Maréchal"+str(ctx.message.author))
 		else:
 			await ctx.send("VOUS N'ETES pas autorisé")
 			
@@ -231,6 +232,7 @@ async def horairepriereramadan(ctx):
 		texte += "\t"+horaire_priere[i]+"\n"
 	await envoi(ctx, ":mosque: HORAIRES DE PRIÈRES :mosque:", texte, auteur="[Islamic Finder](http://"+info_bonus[4]+")", desti="horairepriere")
 
+#standby
 @bot.command()
 async def muslimMission(ctx):
 	guild = ctx.message.guild
@@ -243,7 +245,7 @@ async def gif(ctx, *, msg:str):
 	texte = str(msg)
 	auteur = ctx.message.author.name
 	auteur_avatar = ctx.message.author.avatar_url
-	img = recherche_gif_alea.main(msg)
+	img = recherche_gif_alea.main(texte)
 	if img != "gifs introuvable":
 		await envoi(ctx, titre, auteur=auteur, avatar=auteur_avatar, desti="gif", image=img)
 	else:
@@ -443,20 +445,7 @@ async def joue(ctx, url, *, content=""):
 		await envoi(ctx, titre, "Ajout de : \n"+str(recherche_youtube_titre.main(url)), auteur, avatar_auteur, "music")
 
 	else :
-		recherche_music = str(url)+" "+content
-		url_trouver, titreMusic = recherche_youtube.main(recherche_music)
-		url_trouver = "https://www.youtube.com"+url_trouver
-
-		if non_playlist(url_trouver) == True:
-			url_trouver=suppr_apartir(url_trouver, "&")
-			await ctx.send("C'est une playliste seul la première a été récuperé")
-
-		await join(ctx, guild)
-
-		add_queue(ctx, guild, url_trouver)
-
-
-		await envoi(ctx, titre, "Ajout de : ["+titreMusic+"]("+url_trouver+")", auteur, avatar_auteur, "music")
+		await ctx.send("Il me faut un lien pour jouer l'audio !!")
 		
 
 @bot.command()
@@ -485,9 +474,7 @@ async def queue(ctx):
 		texte += titre+"\n"
 	await envoi(ctx, titreM, texte)
 
-"""@bot.command()
-async def playlist(ctx, categorie):
-"""	
+
 @bot.command()
 async def purgeQueue(ctx):
 	guild = ctx.message.guild
@@ -543,6 +530,7 @@ async def help(ctx):
 	texte += "horairepriere\n"
 	texte += "horairepriereramadan\n"
 	texte += "gif\n"
+	texte += "deploimentdansletheatredoperation\n"
 	texte += "---------------------\n"
 
 	titre = 'Commande HELP'
