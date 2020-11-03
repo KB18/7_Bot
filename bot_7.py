@@ -22,7 +22,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.97"
+version_bot = "20.98"
 
 #channel = "test_bot"
 vote = None
@@ -103,15 +103,6 @@ async def votes(ctx, contenue_txt_vote:str):
 	global vote
 	if(contenue_txt_vote == ""):
 		await ctx.send('Erreur')
-	elif(contenue_txt_vote == "help"):
-		texte = " votes <intituler du vote entre guillemets> : permet de creer un vote\n"
-		texte += "votes <close> :  qui permet de fermer un vote et d'obtenir les resultats"
-		embed = discord.Embed(
-			description = texte,
-			colour = discord.Colour.green()
-		)
-		embed.set_author(name="Les differente utilisation de cette commande sont : ")
-		await ctx.send(embed=embed)
 
 	elif(contenue_txt_vote == "close"):
 		if vote != None and ctx.message.author.name == vote.get_Auteur():
@@ -162,21 +153,12 @@ async def orthographe(ctx):
 
 @bot.command()
 async def code(ctx, lang, *, content=""):
-	if lang == "help" and content == "":
-		texte = "$codes <nom du code> <code brut> : permet d'envoyer du code de manière propre (coloré, etc...)"
-		embed = discord.Embed(
-			description = texte,
-			colour = discord.Colour.green()
-		)
-		embed.set_author(name="Les differente utilisation de cette commande sont : ")
-		await ctx.send(embed=embed)
-	else:
-		await ctx.channel.purge(limit=1)
-		texte = " ```"+str(lang)+"\n"
-		texte += content
-		texte += "\n```"
-		texte += "*** Ecrit par ***"+str(ctx.message.author.mention)
-		await ctx.send(texte)
+	await ctx.channel.purge(limit=1)
+	texte = " ```"+str(lang)+"\n"
+	texte += content
+	texte += "\n```"
+	texte += "*** Ecrit par ***"+str(ctx.message.author.mention)
+	await ctx.send(texte)
 
 
 @bot.command()
@@ -205,10 +187,10 @@ async def spammention(ctx, nb:int, message):
 
 @bot.command()
 async def purge(ctx, nb):
-		auteur = ctx.message.author.name
-		if str(auteur) == "KARIM":
+		auteur = ctx.message.author
+		if str(auteur) == "KARIM#9286":
 			await ctx.channel.purge(limit=int(nb))
-			await ctx.send("Ce fut un plaisir de vous aider Maréchal"+str(ctx.message.author))
+			await ctx.send("Ce fut un plaisir de vous aider Maréchal "+str(ctx.message.author.name))
 		else:
 			await ctx.send("VOUS N'ETES pas autorisé")
 			
@@ -508,34 +490,46 @@ async def arrete(ctx):
 
 '''------------------------------------------commande help-------------------------------------'''
 @bot.command()
-async def help(ctx):
-	texte = "---------------------\n"
-	texte += "ping\n"
-	texte += "bon\n"
-	texte += "salut\n"
-	texte += "origine\n"
-	texte += "votes\n"
-	texte += "version\n"
-	texte += "orthographe\n"
-	texte += "presentation\n"
-	texte += "code\n"
-	texte += "joue\n"
-	texte += "arrete\n"
-	texte += "pause\n"
-	texte += "resume\n"
-	texte += "next\n"
-	texte += "purgeQueue\n"
-	texte += "insulte\n"
-	texte += "spammention\n"
-	texte += "horairepriere\n"
-	texte += "horairepriereramadan\n"
-	texte += "gif\n"
-	texte += "deploimentdansletheatredoperation\n"
-	texte += "---------------------\n"
-
+async def help(ctx, *, content=""):
+	content = str(content)
 	titre = 'Commande HELP'
 
-	await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", desti="help")
+	if content == "code":
+		texte = "$codes <nom du code> <code brut> : permet d'envoyer du code de manière propre (coloré, etc...)"
+		await envoi(ctx, titre=titre+content, texte=texte,  desti="help_commande")
+
+	elif content == "votes":
+		texte = " votes <intituler du vote entre guillemets> : permet de creer un vote\n"
+		texte += "votes <close> :  qui permet de fermer un vote et d'obtenir les resultats"
+		await envoi(ctx, titre=titre+content, texte=texte,  desti="help_commande")
+
+	else:
+		texte = "---------------------\n"
+		texte += "ping\n"
+		texte += "bon\n"
+		texte += "salut\n"
+		texte += "origine\n"
+		texte += "votes\n"
+		texte += "version\n"
+		texte += "orthographe\n"
+		texte += "presentation\n"
+		texte += "code\n"
+		texte += "joue\n"
+		texte += "arrete\n"
+		texte += "pause\n"
+		texte += "resume\n"
+		texte += "next\n"
+		texte += "purgeQueue\n"
+		texte += "insulte\n"
+		texte += "spammention\n"
+		texte += "horairepriere\n"
+		texte += "horairepriereramadan\n"
+		texte += "gif\n"
+		texte += "deploimentdansletheatredoperation\n"
+		texte += "---------------------\n"
+
+
+		await envoi(ctx, titre, texte, "@KARIM#9286 aka KARIM LE FONDATEUR", desti="help")
 
 bot.loop.create_task(time_check())
 

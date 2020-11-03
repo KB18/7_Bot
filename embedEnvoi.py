@@ -4,7 +4,7 @@ async def envoi(ctx, titre, texte="", auteur="", avatar="", desti="", image=""):
 	
 	embed = discord.Embed(
 		description = texte,
-		colour = discord.Colour.blue(),
+		colour = discord.Colour.green(),
 		title = "**"+titre+"**"
 	)
 	if auteur != "" and avatar != "" and desti == "music":
@@ -18,8 +18,12 @@ async def envoi(ctx, titre, texte="", auteur="", avatar="", desti="", image=""):
 
 	if auteur != "" and desti == "horairepriere":
 		embed.add_field(name="Source : ", value=auteur, inline=False)
+
 	if auteur != "" and desti =="gif" and image !="":
 		embed.set_image(url=image)
 		embed.set_footer(text="Affiché par "+auteur, icon_url=avatar)
+
+	if desti == "help_commande":
+		embed.set_author(name="Les differente utilisation de cette commande sont : ")
 
 	await ctx.send(embed=embed)
