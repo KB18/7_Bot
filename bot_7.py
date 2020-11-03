@@ -239,7 +239,7 @@ async def pin(ctx):
 	auteur_id = ctx.message.author.id
 	await ctx.channel.purge(limit=1)
 	
-	msg = channel.history().find(lambda msg: msg.author.id == auteur_id)
+	msg = await channel.history().find(lambda msg: msg.author.id == auteur_id)
 
 	if(msg != None):
 		await ctx.send(msg.content)
