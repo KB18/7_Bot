@@ -242,7 +242,7 @@ async def pin(ctx):
 	msg = channel.history().find(lambda msg: msg.author.id == auteur_id)
 
 	if(msg != None):
-		await ctx.pin_message(msg)
+		await ctx.pin(msg)
 	else:
 		await ctx.send("ahhhhhhhhhh impossible de trouver ton dernier message ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 
@@ -506,7 +506,7 @@ async def arrete(ctx):
 @bot.command()
 async def help(ctx, *, content=""):
 	content = str(content)
-	titre = 'Commande HELP'
+	titre = 'Commande HELP '
 
 	if content == "code":
 		texte = "$codes <nom du code> <code brut> : permet d'envoyer du code de manière propre (coloré, etc...)"
