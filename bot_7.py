@@ -22,7 +22,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.98"
+version_bot = "20.99"
 
 #channel = "test_bot"
 vote = None
@@ -97,7 +97,7 @@ async def on_reaction_add(reaction, user):
 
 '''------------------------------------------commande pour le vote-------------------------------------'''
 @bot.command()
-async def votes(ctx, contenue_txt_vote:str):
+async def votes(ctx, *, contenue_txt_vote:str=""):
 
 	contenue_txt_vote = str(contenue_txt_vote)
 	global vote
@@ -232,6 +232,20 @@ async def gif(ctx, *, msg:str):
 		await envoi(ctx, titre, auteur=auteur, avatar=auteur_avatar, desti="gif", image=img)
 	else:
 		await ctx.send("OHHHHHHHHHHHHH t'es debilos ou quoi ?? pourquoi tu roule ta tete sur ton clavier ???")
+
+@bot.command()
+async def pin(ctx):
+	channel = ctx.message.channel
+	auteur_id = ctx.message.author.id
+	await ctx.channel.purge(limit=1)
+	
+	msg = channel.history().find(lambda msg: msg.author.id == auteur_id)
+
+	if(msg != None):
+		await ctx.pin_message(msg)
+	else:
+		await ctx.send("ahhhhhhhhhh impossible de trouver ton dernier message ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+
 '''------------------------------------------commande pour la musique-------------------------------------'''
 def suppr_apartir(txt, c):
 	tmp =""
@@ -499,8 +513,12 @@ async def help(ctx, *, content=""):
 		await envoi(ctx, titre=titre+content, texte=texte,  desti="help_commande")
 
 	elif content == "votes":
-		texte = " votes <intituler du vote entre guillemets> : permet de creer un vote\n"
-		texte += "votes <close> :  qui permet de fermer un vote et d'obtenir les resultats"
+		texte = "$votes <intituler du vote entre guillemets> : permet de creer un vote\n"
+		texte += "$votes <close> :  qui permet de fermer un vote et d'obtenir les resultats"
+		await envoi(ctx, titre=titre+content, texte=texte,  desti="help_commande")
+
+	elif content == "pin":
+		texte = "$pin : permet d'epingler le dernier message que vous avez envoyer\n"
 		await envoi(ctx, titre=titre+content, texte=texte,  desti="help_commande")
 
 	else:
@@ -525,6 +543,7 @@ async def help(ctx, *, content=""):
 		texte += "horairepriere\n"
 		texte += "horairepriereramadan\n"
 		texte += "gif\n"
+		texte += "pin\n"
 		texte += "deploimentdansletheatredoperation\n"
 		texte += "---------------------\n"
 
