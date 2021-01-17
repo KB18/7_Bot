@@ -229,8 +229,8 @@ async def muslimMission(ctx):
                         
                         if discord.utilsget(ctx.guild.roles, name=role_horaire_priere) != None :
                                 await guild.create_role(name=role_horaire_priere, colour=discord.Colour(0x00ff00))
-        else:
-                await ctx.send("C'est deja pret akhi !! ")
+    else:
+        await ctx.send("C'est deja pret akhi !! ")
 
 @bot.command()
 async def gif(ctx, *, msg:str):
