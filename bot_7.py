@@ -22,7 +22,7 @@ api = str(os.environ.get('RIOT_KEY'))
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 
-version_bot = "20.99"
+version_bot = "20.999"
 
 #channel = "test_bot"
 vote = None
@@ -57,10 +57,12 @@ async def on_command_error(ctx, error):
 	await envoi(ctx, titre, texte)
 
 async def time_check():
-	await bot.wait_until_ready()
-	while not bot.is_closed:
+	while true:
 		now = datetime.now()
-		verificateurHoraire(now.hour)
+		i = 1
+		if i == 1:
+                        verificateurHoraire(now.hour)
+                        i = 0
 		
 
 def verificateurHoraire(heure):
@@ -68,6 +70,7 @@ def verificateurHoraire(heure):
 		for channel in guild.channels:
 			if channel == channel_horaire_priere:
 				channel.send("salut")
+				
 
 
 '''------------------------------------------comptabilisation des votes-------------------------------------'''
@@ -218,8 +221,16 @@ async def horairepriereramadan(ctx):
 @bot.command()
 async def muslimMission(ctx):
 	guild = ctx.message.guild
-	await guild.create_text_channel(channel_horaire_priere)
-	await guild.create_role(name=role_horaire_priere)
+	if  discord.utils.get(guild.categories, name=channel_horaire_priere):
+                await guild.create_category(channel_horaire_priere)
+                
+                if discord.utilsget(ctx.guild.text_channels, name=channel_horaire_priere) != None:
+                        await guild.create_text_channel(channel_horaire_priere)
+                        
+                        if discord.utilsget(ctx.guild.roles, name=role_horaire_priere) != None :
+                                await guild.create_role(name=role_horaire_priere, colour=discord.Colour(0x00ff00))
+        else:
+                await ctx.send("C'est deja pret akhi !! ")
 
 @bot.command()
 async def gif(ctx, *, msg:str):
