@@ -221,7 +221,7 @@ async def horairepriereramadan(ctx):
 @bot.command()
 async def muslimMission(ctx):
 	guild = ctx.message.guild
-	if  discord.utils.get(guild.categories, name=channel_horaire_priere):
+	if  discord.utils.get(guild.categories, name=channel_horaire_priere) != None:
                 await guild.create_category(channel_horaire_priere)
                 
                 if discord.utilsget(ctx.guild.text_channels, name=channel_horaire_priere) != None:
