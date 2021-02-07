@@ -124,6 +124,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 		#trouve index
 		for i in range(len(horaire_priere)):
 			if heure+":"+minute == horaire_priere[i]:
+				print("c'est l'heure")
 				#trouve serv
 				for guild in bot.guilds:
 					#text
