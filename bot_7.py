@@ -63,18 +63,21 @@ async def on_command_error(ctx, error):
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
 
+def test():
+	return ["test","test"],["06:25 PM", "08:05 PM"],[]
 
 async def time_check():
 	global jour_actu, mois_actu
-	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main() 
+	nom_priere, horaire_priere, info_bonus = test()
 	horaire_priere = clear_time(horaire_priere)
+	print(horaire_priere)
 	while True:
 		now = datetime.now()
 
 		if now.day != jour_actu or now.month != mois_actu:
 			jour_actu = now.day
 			mois_actu = now.month
-			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+			nom_priere, horaire_priere, info_bonus = test()
 			horaire_priere = clear_time(horaire_priere)
 
 		await verificateurHoraire(now.hour, now.minute, nom_priere, horaire_priere)
@@ -82,16 +85,29 @@ async def time_check():
 		await asyncio.sleep(3)
 
 def clear_time(liste):
+	nv_liste = []
 	for tmp in liste:
 		temps = ""
+		temps_2 = ""
 		for i in range(len(tmp)):
 			if i == 5:
 				break
 			temps += tmp[i]
 		if tmp[6] == 'P':
-			temps[0] = '1'
-			temps[1] = str(int(temps[1]) + 2)
-		return temps
+			if int(temps[1]) + 2 <= 9:
+				temps_2 += '1'
+				temps_2 += str(int(temps[1]) + 2)
+			else:
+				temps_2 += '2'
+				temps_2 += str(int(temps[1]) + 2 - 10)
+			for d in range(len(temps)):
+				if d > 1:
+					temps_2 +=temps[d]
+		else:
+			temps_2 = temps
+		print(temps_2)
+		nv_liste.append(temps_2)
+	return nv_liste
 
 
 def conv_temp(tmp):
@@ -108,7 +124,6 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 		#trouve index
 		for i in range(len(horaire_priere)):
 			if heure+":"+minute == horaire_priere[i]:
-				
 				#trouve serv
 				for guild in bot.guilds:
 					#text
@@ -145,7 +160,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 								if nb not in [0,1,2]:
 									nb = 0
 								voice = discord.utils.get(bot.voice_clients, guild=guild)
-								voice.play(discord.FFmpegPCMAudio("adhan_"+nb+".mp3"))
+								voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
 				break
 
 
