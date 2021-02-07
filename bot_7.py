@@ -292,6 +292,7 @@ async def muslimMission(ctx):
 	if discord.utils.get(guild.roles, name=role_horaire_priere) == None :
 		role = await guild.create_role(name=role_horaire_priere, colour=discord.Colour(0x00ff00))
 		await ctx.send("Role pret akhi !! ")
+		print("role")
 	else:
 		for rol in  guild.roles:
 			if rol.name == role_horaire_priere:
@@ -305,7 +306,7 @@ async def muslimMission(ctx):
 			if rolx.name == "@everyone":
 				await category.set_permissions(rolx, read_messages=False)
 		await category.set_permissions(role, read_messages=True)
-		
+		print("cat")
 		await ctx.send("Catégorie pret akhi !! ")
 	else:
 		for cat in  guild.categories:
@@ -317,12 +318,14 @@ async def muslimMission(ctx):
 	if discord.utils.get(guild.text_channels, name=channel_horaire_priere) == None:
 		await guild.create_text_channel(channel_horaire_priere, category=category)
 		await ctx.send("Channel pret akhi !! ")
+		print("channel")
 	else:
 		await ctx.send("Channel deja pret akhi !! ")
 
 	if discord.utils.get(guild.voice_channels, name=voc_horaire_priere) == None:
 		await guild.create_voice_channel(voc_horaire_priere, category=category)
 		await ctx.send("Channel vocal pret akhi !! ")
+		print("channel")
 	else:
 		await ctx.send("Channel vocal deja pret akhi !! ")
 
