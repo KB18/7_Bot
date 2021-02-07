@@ -66,14 +66,14 @@ async def on_command_error(ctx, error):
 
 async def time_check():
 	global jour_actu, mois_actu
-	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main() 
+	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere.main() 
 	while True:
 		now = datetime.now()
 
 		if now.day != jour_actu or now.month != mois_actu:
 			jour_actu = now.day
 			mois_actu = now.month
-			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere.main()
 
 		await verificateurHoraire(now.hour, now.minute, nom_priere, horaire_priere)
 
