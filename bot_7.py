@@ -1,6 +1,7 @@
 # bot_7 by KARIM
 
 import discord
+from discord.channel import VoiceChannel
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
@@ -9,6 +10,9 @@ import os
 from vote import *
 from random import randint
 import youtube_dl
+from datetime import datetime
+from time import sleep
+from random import randint
 #Code fait pour l'occasion
 import recherche_youtube
 import recherche_youtube_titre
@@ -16,13 +20,12 @@ from embedEnvoi import envoi
 import recherche_horaire_priere
 import recherche_horaire_priere_ramadan
 import recherche_gif_alea
-from datetime import datetime
 
-api = str(os.environ.get('RIOT_KEY'))
-bot = commands.Bot(command_prefix='$')
+intents = discord.Intents().all()
+bot = commands.Bot(command_prefix='$', intents=intents)
 bot.remove_command('help')
 
-version_bot = "20.999"
+version_bot = "21"
 
 #channel = "test_bot"
 vote = None
@@ -31,7 +34,11 @@ queues = {}
 queues_titre = {}
 player = None
 channel_horaire_priere = 'heures-de-la-priere'
+voc_horaire_priere = 'Adhan'
 role_horaire_priere = "muslim"
+
+jour_actu = 1
+mois_actu = 1
 
 @bot.event
 async def on_ready():
@@ -56,20 +63,77 @@ async def on_command_error(ctx, error):
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
 
-async def time_check():
-	while true:
-		now = datetime.now()
-		i = 1
-		if i == 1:
-                        verificateurHoraire(now.hour)
-                        i = 0
-		
 
-def verificateurHoraire(heure):
-	for guild in bot.guilds:
-		for channel in guild.channels:
-			if channel == channel_horaire_priere:
-				channel.send("salut")
+async def time_check():
+	global jour_actu, mois_actu
+	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main() 
+	while True:
+		now = datetime.now()
+
+		if now.day != jour_actu or now.month != mois_actu:
+			jour_actu = now.day
+			mois_actu = now.month
+			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+
+		await verificateurHoraire(now.hour, now.minute, nom_priere, horaire_priere)
+
+		await asyncio.sleep(3)
+		
+def conv_temp(tmp):
+	if tmp < 10:
+		tmp = "0"+str(tmp)
+	return str(tmp)
+
+async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
+	global jour_actu
+	heure = conv_temp(heure)
+	minute = conv_temp(minute)
+	#verif heure
+	if heure+":"+minute in horaire_priere:
+		#trouve index
+		for i in range(len(horaire_priere)):
+			if heure+":"+minute == horaire_priere[i]:
+				
+				#trouve serv
+				for guild in bot.guilds:
+					#text
+					#trouve channel
+					for channel in guild.text_channels:
+						if channel.name == channel_horaire_priere:
+							#message et suppr
+							await channel.send(str(nom_priere[i]))
+							#mention
+							for role in guild.roles:
+								if role_horaire_priere == role.name:
+									await channel.send(role.mention)
+
+							horaire_priere.pop(i)
+							nom_priere.pop(i)
+
+					#audio
+					voc_ADHAN = None
+					for vocal in guild.voice_channels:
+						if vocal.name == voc_horaire_priere:
+							voc_ADHAN = vocal
+						if voc_ADHAN != None:
+							for voc in guild.voice_channels:
+								if voc.members != None:
+									for membre in voc.members:
+										if discord.utils.get(membre.roles, name=role_horaire_priere):
+											await membre.move_to(voc_ADHAN)
+							try:
+								await voc_ADHAN.connect()
+							except:
+								print("deja co")
+							finally:
+								nb = randint(0, 2)
+								if nb not in [0,1,2]:
+									nb = 0
+								voice = discord.utils.get(bot.voice_clients, guild=guild)
+								voice.play(discord.FFmpegPCMAudio("adhan_"+nb+".mp3"))
+				break
+
+
 				
 
 
@@ -221,16 +285,48 @@ async def horairepriereramadan(ctx):
 @bot.command()
 async def muslimMission(ctx):
 	guild = ctx.message.guild
-	if  discord.utils.get(guild.categories, name=channel_horaire_priere) != None:
-                await guild.create_category(channel_horaire_priere)
-                
-                if discord.utilsget(ctx.guild.text_channels, name=channel_horaire_priere) != None:
-                        await guild.create_text_channel(channel_horaire_priere)
-                        
-                        if discord.utilsget(ctx.guild.roles, name=role_horaire_priere) != None :
-                                await guild.create_role(name=role_horaire_priere, colour=discord.Colour(0x00ff00))
-    else:
-        await ctx.send("C'est deja pret akhi !! ")
+	category = None
+	role = None
+
+	#role
+	if discord.utils.get(guild.roles, name=role_horaire_priere) == None :
+		role = await guild.create_role(name=role_horaire_priere, colour=discord.Colour(0x00ff00))
+		await ctx.send("Role pret akhi !! ")
+	else:
+		for rol in  guild.roles:
+			if rol.name == role_horaire_priere:
+				role = rol
+		await ctx.send("Role deja pret akhi !! ")
+
+	#catégorie
+	if  discord.utils.get(guild.categories, name=channel_horaire_priere) == None:
+		category = await guild.create_category(channel_horaire_priere)
+		for rolx in guild.roles:
+			if rolx.name == "@everyone":
+				await category.set_permissions(rolx, read_messages=False)
+		await category.set_permissions(role, read_messages=True)
+		
+		await ctx.send("Catégorie pret akhi !! ")
+	else:
+		for cat in  guild.categories:
+			if cat.name == channel_horaire_priere:
+				category = cat
+		await ctx.send("Catégorie deja pret akhi !! ")
+
+	#channel
+	if discord.utils.get(guild.text_channels, name=channel_horaire_priere) == None:
+		await guild.create_text_channel(channel_horaire_priere, category=category)
+		await ctx.send("Channel pret akhi !! ")
+	else:
+		await ctx.send("Channel deja pret akhi !! ")
+
+	if discord.utils.get(guild.voice_channels, name=voc_horaire_priere) == None:
+		await guild.create_voice_channel(voc_horaire_priere, category=category)
+		await ctx.send("Channel vocal pret akhi !! ")
+	else:
+		await ctx.send("Channel vocal deja pret akhi !! ")
+
+	
 
 @bot.command()
 async def gif(ctx, *, msg:str):
@@ -564,4 +660,5 @@ async def help(ctx, *, content=""):
 bot.loop.create_task(time_check())
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
+
 
