@@ -1,4 +1,5 @@
-discord
+pip
+discord.py
 asyncio
 Pymoe
 requests
