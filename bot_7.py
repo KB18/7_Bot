@@ -64,7 +64,7 @@ async def on_command_error(ctx, error):
 	await envoi(ctx, titre, texte)
 
 def test():
-	return ["test","test"],["06:40 PM", "08:05 PM"],[]
+	return ["test","test"],["06:48 PM", "08:05 PM"],[]
 
 async def time_check():
 	global jour_actu, mois_actu
