@@ -66,19 +66,34 @@ async def on_command_error(ctx, error):
 
 async def time_check():
 	global jour_actu, mois_actu
-	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere.main() 
+	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main() 
+	horaire_priere = clear_time(horaire_priere)
 	while True:
 		now = datetime.now()
 
 		if now.day != jour_actu or now.month != mois_actu:
 			jour_actu = now.day
 			mois_actu = now.month
-			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere.main()
+			nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+			horaire_priere = clear_time(horaire_priere)
 
 		await verificateurHoraire(now.hour, now.minute, nom_priere, horaire_priere)
 
 		await asyncio.sleep(3)
-		
+
+def clear_time(liste):
+	for tmp in liste:
+		temps = ""
+		for i in range(tmp):
+			if i == 5:
+				break
+			temps += tmp[i]
+		if tmp[6] == 'P':
+			temps[0] = '1'
+			temps[1] = str(int(temps[1]) + 2)
+		return temps
+
+
 def conv_temp(tmp):
 	if tmp < 10:
 		tmp = "0"+str(tmp)
