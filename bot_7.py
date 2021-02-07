@@ -84,7 +84,7 @@ async def time_check():
 def clear_time(liste):
 	for tmp in liste:
 		temps = ""
-		for i in range(tmp):
+		for i in range(len(tmp)):
 			if i == 5:
 				break
 			temps += tmp[i]
