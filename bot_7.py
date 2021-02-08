@@ -13,6 +13,8 @@ import youtube_dl
 from datetime import datetime
 from time import sleep
 from random import randint
+import pytz
+
 #Code fait pour l'occasion
 import recherche_youtube
 import recherche_youtube_titre
@@ -72,7 +74,8 @@ async def time_check():
 	horaire_priere = clear_time(horaire_priere)
 	print(horaire_priere)
 	while True:
-		now = datetime.now()
+		tz = pytz.timezone('Europe/Paris')
+		now = datetime.now(tz)
 
 		if now.day != jour_actu or now.month != mois_actu:
 			jour_actu = now.day
