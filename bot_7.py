@@ -69,6 +69,7 @@ async def on_command_error(ctx, error):
 async def time_check():
 	global jour_actu, mois_actu
 	nom_priere, horaire_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+	print(horaire_priere)
 	horaire_priere = clear_time(horaire_priere)
 	print(horaire_priere)
 	while True:
