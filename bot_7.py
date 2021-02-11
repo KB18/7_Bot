@@ -95,7 +95,7 @@ def clear_time(liste):
 			if i == 5:
 				break
 			temps += tmp[i]
-		if tmp[6] == 'P' and tmp[4] != '2':
+		if tmp[6] == 'P' and tmp[1] != '2':
 			if int(temps[1]) + 2 <= 9:
 				temps_2 += '1'
 				temps_2 += str(int(temps[1]) + 2)
