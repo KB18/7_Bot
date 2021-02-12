@@ -34,10 +34,12 @@ vote = None
 players = {}
 queues = {}
 queues_titre = {}
+
+compteur_priere = {}
 player = None
 channel_horaire_priere = 'heures-de-la-priere'
 voc_horaire_priere = 'Adhan'
-role_horaire_priere = "muslim"
+role_horaire_priere = "Muslims"
 
 jour_actu = 1
 mois_actu = 1
@@ -117,6 +119,12 @@ def conv_temp(tmp):
 		tmp = "0"+str(tmp)
 	return str(tmp)
 
+def point_priere(guild):
+	if guild.id in compteur_priere and compteur_priere[guild.id] != None and compteur_priere[guild.id] != 5:
+		compteur_priere[guild.id] += 1
+	else:
+		compteur_priere[guild.id] = 0
+
 async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 	global jour_actu
 	heure = conv_temp(heure)
@@ -131,39 +139,41 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 				for guild in bot.guilds:
 					#text
 					#trouve channel
-					for channel in guild.text_channels:
-						if channel.name == channel_horaire_priere:
-							#message et suppr
-							await channel.send(str(nom_priere[i]))
-							#mention
-							for role in guild.roles:
-								if role_horaire_priere == role.name:
-									await channel.send(role.mention)
+					if i != compteur_priere[guild.id]:
+						point_priere(guild)
+						for channel in guild.text_channels:
+							if channel.name == channel_horaire_priere:
+								#message et suppr
+								await channel.send(str(nom_priere[i]))
+								#mention
+								for role in guild.roles:
+									if role_horaire_priere == role.name:
+										await channel.send(role.mention)
 
-							horaire_priere.pop(i)
-							nom_priere.pop(i)
+								horaire_priere.pop(i)
+								nom_priere.pop(i)
 
-					#audio
-					voc_ADHAN = None
-					for vocal in guild.voice_channels:
-						if vocal.name == voc_horaire_priere:
-							voc_ADHAN = vocal
-						if voc_ADHAN != None:
-							for voc in guild.voice_channels:
-								if voc.members != None:
-									for membre in voc.members:
-										if discord.utils.get(membre.roles, name=role_horaire_priere):
-											await membre.move_to(voc_ADHAN)
-							try:
-								await voc_ADHAN.connect()
-							except:
-								print("deja co")
-							finally:
-								nb = randint(0, 2)
-								if nb not in [0,1,2]:
-									nb = 0
-								voice = discord.utils.get(bot.voice_clients, guild=guild)
-								voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+						#audio
+						voc_ADHAN = None
+						for vocal in guild.voice_channels:
+							if vocal.name == voc_horaire_priere:
+								voc_ADHAN = vocal
+							if voc_ADHAN != None:
+								for voc in guild.voice_channels:
+									if voc.members != None:
+										for membre in voc.members:
+											if discord.utils.get(membre.roles, name=role_horaire_priere):
+												await membre.move_to(voc_ADHAN)
+								try:
+									await voc_ADHAN.connect()
+								except:
+									print("deja co")
+								finally:
+									nb = randint(0, 2)
+									if nb not in [0,1,2]:
+										nb = 0
+									voice = discord.utils.get(bot.voice_clients, guild=guild)
+									voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
 				break
 
 
