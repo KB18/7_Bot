@@ -119,6 +119,10 @@ def conv_temp(tmp):
 		tmp = "0"+str(tmp)
 	return str(tmp)
 
+def init_priere(guild):
+	if None == compteur_priere[guild.id]:
+		compteur_priere[guild.id] = 0
+
 def point_priere(guild):
 	if guild.id in compteur_priere and compteur_priere[guild.id] != None and compteur_priere[guild.id] != 5:
 		compteur_priere[guild.id] += 1
@@ -137,10 +141,14 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 				print("c'est l'heure")
 				#trouve serv
 				for guild in bot.guilds:
-					#text
-					#trouve channel
+					
+					#initialisation si pas encore deja faite
+					init_priere(guild)
+					#test_nb_priere
 					if i != compteur_priere[guild.id]:
 						point_priere(guild)
+						#text
+						#trouve channel
 						for channel in guild.text_channels:
 							if channel.name == channel_horaire_priere:
 								#message et suppr
