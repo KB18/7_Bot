@@ -68,12 +68,10 @@ async def on_command_error(ctx, error):
 	await envoi(ctx, titre, texte)
 
 
-def test_travail():
-	return ["11:20 PM","11:22 PM","11:24 PM"], ["tesjt","testjj","testjjj"], None
 
 async def time_check():
 	global jour_actu, mois_actu
-	horaire_priere, nom_priere, info_bonus = test_travail()#recherche_horaire_priere_ramadan.main()
+	horaire_priere, nom_priere, info_bonus = recherche_horaire_priere_ramadan.main()
 	horaire_priere = clear_time(horaire_priere)
 	print(horaire_priere)
 	print(nom_priere)
@@ -86,7 +84,7 @@ async def time_check():
 			jour_actu = now.day
 			mois_actu = now.month
 			horaire_priere, nom_priere = [],[]
-			horaire_priere, nom_priere, info_bonus = test_travail() #recherche_horaire_priere_ramadan.main()
+			horaire_priere, nom_priere, info_bonus = recherche_horaire_priere_ramadan.main()
 			horaire_priere = clear_time(horaire_priere)
 			print(horaire_priere)
 			print(nom_priere)
@@ -179,7 +177,9 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 								for voc in guild.voice_channels:
 									if voc.members != None:
 										for membre in voc.members:
+											print(str(discord.utils.get(membre.roles, name=role_horaire_priere))+""+str(membre))
 											if discord.utils.get(membre.roles, name=role_horaire_priere):
+												print(membre)
 												await membre.move_to(voc_ADHAN)
 								try:
 									await voc_ADHAN.connect()
@@ -190,7 +190,10 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 									if nb not in [0,1,2]:
 										nb = 0
 									voice = discord.utils.get(bot.voice_clients, guild=guild)
-									voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+									try:
+										voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+									except:
+										print("deja Adhan")
 				break
 
 
