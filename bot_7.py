@@ -192,6 +192,9 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 									voice = discord.utils.get(bot.voice_clients, guild=guild)
 									try:
 										voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+										while voice.is_playing():
+											await sleep(1)
+										await voice.disconnect()
 									except:
 										print("deja Adhan")
 				break
