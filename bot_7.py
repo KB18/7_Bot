@@ -68,21 +68,28 @@ async def on_command_error(ctx, error):
 	await envoi(ctx, titre, texte)
 
 
+def test_travail():
+	return ["11:20 PM","11:22 PM","11:24 PM"], ["tesjt","testjj","testjjj"], None
+
 async def time_check():
 	global jour_actu, mois_actu
-	horaire_priere, nom_priere, info_bonus = recherche_horaire_priere_ramadan.main()
-	print(horaire_priere)
+	horaire_priere, nom_priere, info_bonus = test_travail()#recherche_horaire_priere_ramadan.main()
 	horaire_priere = clear_time(horaire_priere)
 	print(horaire_priere)
+	print(nom_priere)
 	while True:
 		tz = pytz.timezone('Europe/Paris')
 		now = datetime.now(tz)
 
 		if now.day != jour_actu or now.month != mois_actu:
+			print("changemant de jour !!!")
 			jour_actu = now.day
 			mois_actu = now.month
-			horaire_priere, nom_priere, info_bonus = recherche_horaire_priere_ramadan.main()
+			horaire_priere, nom_priere = [],[]
+			horaire_priere, nom_priere, info_bonus = test_travail() #recherche_horaire_priere_ramadan.main()
 			horaire_priere = clear_time(horaire_priere)
+			print(horaire_priere)
+			print(nom_priere)
 
 		await verificateurHoraire(now.hour, now.minute, nom_priere, horaire_priere)
 
@@ -98,15 +105,15 @@ def clear_time(liste):
 				break
 			temps += tmp[i]
 		if tmp[6] == 'P' and tmp[1] != '2':
-			if int(temps[1]) + 2 <= 9:
-				temps_2 += '1'
-				temps_2 += str(int(temps[1]) + 2)
-			else:
-				temps_2 += '2'
-				temps_2 += str(int(temps[1]) + 2 - 10)
+			#ajout de 12h
+			nv_nb = str((int(tmp[0]) * 10 + int(tmp[1])) + 12)
+
+
 			for d in range(len(temps)):
 				if d > 1:
 					temps_2 +=temps[d]
+				else:
+					temps_2 += nv_nb[d]
 		else:
 			temps_2 = temps
 		print(temps_2)
@@ -120,17 +127,21 @@ def conv_temp(tmp):
 	return str(tmp)
 
 def init_priere(guild):
-	if None == compteur_priere[guild.id]:
+	global compteur_priere
+	try:
+		print(compteur_priere[guild.id])
+	except:
 		compteur_priere[guild.id] = 0
 
 def point_priere(guild):
-	if guild.id in compteur_priere and compteur_priere[guild.id] != None and compteur_priere[guild.id] != 5:
+	global compteur_priere
+	if str(guild.id) in compteur_priere and compteur_priere[guild.id] != None and compteur_priere[guild.id] != 5:
 		compteur_priere[guild.id] += 1
 	else:
 		compteur_priere[guild.id] = 0
 
 async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
-	global jour_actu
+	global jour_actu, compteur_priere
 	heure = conv_temp(heure)
 	minute = conv_temp(minute)
 	#verif heure
@@ -145,7 +156,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 					#initialisation si pas encore deja faite
 					init_priere(guild)
 					#test_nb_priere
-					if i != compteur_priere[guild.id]:
+					if i >= compteur_priere[guild.id]:
 						point_priere(guild)
 						#text
 						#trouve channel
@@ -158,8 +169,6 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 									if role_horaire_priere == role.name:
 										await channel.send(role.mention)
 
-								horaire_priere.pop(i)
-								nom_priere.pop(i)
 
 						#audio
 						voc_ADHAN = None
@@ -714,5 +723,6 @@ async def help(ctx, *, content=""):
 bot.loop.create_task(time_check())
 
 bot.run(str(os.environ.get('BOT_TOKEN')))
+
 
 
