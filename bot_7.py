@@ -67,8 +67,6 @@ async def on_command_error(ctx, error):
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
 
-
-
 async def time_check():
 	global jour_actu, mois_actu
 	horaire_priere, nom_priere, info_bonus = recherche_horaire_priere_ramadan.main()
@@ -133,7 +131,7 @@ def init_priere(guild):
 
 def point_priere(guild):
 	global compteur_priere
-	if str(guild.id) in compteur_priere and compteur_priere[guild.id] != None and compteur_priere[guild.id] != 5:
+	if guild.id in compteur_priere and compteur_priere[guild.id] != 6:
 		compteur_priere[guild.id] += 1
 	else:
 		compteur_priere[guild.id] = 0
@@ -155,12 +153,14 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 					init_priere(guild)
 					#test_nb_priere
 					if i >= compteur_priere[guild.id]:
+						print(compteur_priere[guild.id])
 						point_priere(guild)
 						#text
 						#trouve channel
 						for channel in guild.text_channels:
 							if channel.name == channel_horaire_priere:
 								#message et suppr
+								await channel.send("LES FRERES C'EST L'HEURE !!")
 								await channel.send(str(nom_priere[i]))
 								#mention
 								for role in guild.roles:
@@ -168,35 +168,33 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 										await channel.send(role.mention)
 
 
-						#audio
-						voc_ADHAN = None
-						for vocal in guild.voice_channels:
-							if vocal.name == voc_horaire_priere:
-								voc_ADHAN = vocal
-							if voc_ADHAN != None:
-								for voc in guild.voice_channels:
-									if voc.members != None:
-										for membre in voc.members:
-											print(str(discord.utils.get(membre.roles, name=role_horaire_priere))+""+str(membre))
-											if discord.utils.get(membre.roles, name=role_horaire_priere):
-												print(membre)
-												await membre.move_to(voc_ADHAN)
+					#audio
+					voc_ADHAN = None
+					for vocal in guild.voice_channels:
+						if vocal.name == voc_horaire_priere:
+							voc_ADHAN = vocal
+						if voc_ADHAN != None:
+							for voc in guild.voice_channels:
+								if voc.members != None:
+									for membre in voc.members:
+										if discord.utils.get(membre.roles, name=role_horaire_priere):
+											await membre.move_to(voc_ADHAN)
+							try:
+								await voc_ADHAN.connect()
+							except:
+								print("deja co")
+							finally:
+								nb = randint(0, 2)
+								if nb not in [0,1,2]:
+									nb = 0
+								voice = discord.utils.get(bot.voice_clients, guild=guild)
 								try:
-									await voc_ADHAN.connect()
+									voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+									while voice.is_playing() == True:
+										await sleep(10)
+									await voice.disconnect()
 								except:
-									print("deja co")
-								finally:
-									nb = randint(0, 2)
-									if nb not in [0,1,2]:
-										nb = 0
-									voice = discord.utils.get(bot.voice_clients, guild=guild)
-									try:
-										voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
-										while voice.is_playing():
-											await sleep(1)
-										await voice.disconnect()
-									except:
-										print("deja Adhan")
+									print("deja Adhan")
 				break
 
 
