@@ -27,7 +27,7 @@ intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='$', intents=intents)
 bot.remove_command('help')
 
-version_bot = "21"
+version_bot = "22"
 
 #channel = "test_bot"
 vote = None
@@ -131,13 +131,13 @@ def init_priere(guild):
 
 def point_priere(guild):
 	global compteur_priere
-	if guild.id in compteur_priere and compteur_priere[guild.id] != 6:
+	if guild.id in compteur_priere and compteur_priere[guild.id] != 25:
 		compteur_priere[guild.id] += 1
 	else:
 		compteur_priere[guild.id] = 0
 
 async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
-	global jour_actu, compteur_priere
+	global jour_actu, compteur_priere, priere_actu
 	heure = conv_temp(heure)
 	minute = conv_temp(minute)
 	#verif heure
@@ -145,6 +145,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 		#trouve index
 		for i in range(len(horaire_priere)):
 			if heure+":"+minute == horaire_priere[i]:
+
 				print("c'est l'heure")
 				#trouve serv
 				for guild in bot.guilds:
@@ -160,8 +161,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 						for channel in guild.text_channels:
 							if channel.name == channel_horaire_priere:
 								#message et suppr
-								await channel.send("LES FRERES C'EST L'HEURE !!")
-								await channel.send(str(nom_priere[i]))
+								await channel.send("LES FRERES C'EST L'HEURE de "+str(nom_priere[i]))
 								#mention
 								for role in guild.roles:
 									if role_horaire_priere == role.name:
