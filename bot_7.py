@@ -131,7 +131,7 @@ def init_priere(guild):
 	except:
 		print("Pas de compteur avant bienvenue les Akhy!!")
 	finally:
-		compteur_priere[guild.id] = 5
+		compteur_priere[guild.id] = 2
 
 def point_priere(guild):
 	global compteur_priere
