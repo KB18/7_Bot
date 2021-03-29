@@ -125,13 +125,7 @@ def conv_temp(tmp):
 
 def init_priere(guild):
 	global compteur_priere
-	try:
-		print(compteur_priere[guild.id])
-		
-	except:
-		print("Pas de compteur avant bienvenue les Akhy!!")
-	finally:
-		compteur_priere[guild.id] = 2
+	compteur_priere[guild.id] = 2
 
 def point_priere(guild):
 	global compteur_priere
@@ -172,40 +166,39 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 										await channel.send(role.mention)
 
 
-						#audio
-						voc_ADHAN = None
-						for vocal in guild.voice_channels:
-							if vocal.name == voc_horaire_priere:
-								voc_ADHAN = vocal
-							if voc_ADHAN != None:
-								for voc in guild.voice_channels:
-									if voc.members != None:
-										for membre in voc.members:
-											if discord.utils.get(membre.roles, name=role_horaire_priere):
-												await membre.move_to(voc_ADHAN)
-								#test la connexion a un channel vocal
+					#audio
+					voc_ADHAN = None
+					for vocal in guild.voice_channels:
+						if vocal.name == voc_horaire_priere:
+							voc_ADHAN = vocal
+						if voc_ADHAN != None:
+							for voc in guild.voice_channels:
+								if voc.members != None:
+									for membre in voc.members:
+										if discord.utils.get(membre.roles, name=role_horaire_priere):
+											await membre.move_to(voc_ADHAN)
+							#test la connexion a un channel vocal
+							try:
+								await voc_ADHAN.connect()
+							except:
+								print("deja co")
+							finally:
+								nb = randint(0, 2)
+								if nb not in [0,1,2]:
+									nb = 0
+								voice = discord.utils.get(bot.voice_clients, guild=guild)
 								try:
-									await voc_ADHAN.connect()
+									voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
+									while voice.is_playing() == True:
+										await sleep(10)
+									await voice.disconnect()
 								except:
-									print("deja co")
-								finally:
-									nb = randint(0, 2)
-									if nb not in [0,1,2]:
-										nb = 0
-									voice = discord.utils.get(bot.voice_clients, guild=guild)
-									try:
-										voice.play(discord.FFmpegPCMAudio("adhan_"+str(nb)+".mp3"))
-										while voice.is_playing() == True:
-											await sleep(10)
-										await voice.disconnect()
-									except:
-										print("deja Adhan")
+									print("deja Adhan")
 					else:
 						break
 	else:
 		for guild in bot.guilds:
 			#initialisation si pas encore deja faite
-			print("Reinitialisation des compteurs !!")
 			init_priere(guild)
 
 
