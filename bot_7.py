@@ -27,7 +27,7 @@ intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='$', intents=intents)
 bot.remove_command('help')
 
-version_bot = "22"
+version_bot = "23"
 
 #channel = "test_bot"
 vote = None
@@ -66,6 +66,7 @@ async def on_command_error(ctx, error):
 
 	'''------embed pour affichage erreur--------'''
 	await envoi(ctx, titre, texte)
+
 
 
 async def time_check():
@@ -165,7 +166,6 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 									if role_horaire_priere == role.name:
 										await channel.send(role.mention)
 
-
 					#audio
 					voc_ADHAN = None
 					for vocal in guild.voice_channels:
@@ -181,7 +181,7 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 							try:
 								await voc_ADHAN.connect()
 							except:
-								print("deja co")
+								print("deja co "+str(guild))
 							finally:
 								nb = randint(0, 2)
 								if nb not in [0,1,2]:
@@ -193,9 +193,8 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 										await sleep(10)
 									await voice.disconnect()
 								except:
-									print("deja Adhan")
-					else:
-						break
+									print("deja Adhan "+str(guild))
+					
 	else:
 		for guild in bot.guilds:
 			#initialisation si pas encore deja faite
