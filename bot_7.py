@@ -162,9 +162,9 @@ async def verificateurHoraire(heure, minute, nom_priere, horaire_priere):
 								#message et suppr
 								await channel.send("LES FRERES C'EST L'HEURE de "+str(nom_priere[i]))
 								#mention
-								for role in guild.roles:
+								"""for role in guild.roles:
 									if role_horaire_priere == role.name:
-										await channel.send(role.mention)
+										await channel.send(role.mention)"""
 
 					#audio
 					voc_ADHAN = None
